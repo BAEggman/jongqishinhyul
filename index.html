@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>精氣神血津液 — 학습 허브</title>
+<style>
+  :root{
+    --bg:#1b1613; --bg2:#211a15; --panel:#272019; --panel2:#2e261d;
+    --ink:#ece0c8; --ink-dim:#a99a7e; --ink-faint:#7d7059;
+    --line:rgba(236,224,200,.13); --line-strong:rgba(236,224,200,.26);
+    --zhu:#cf4a2c; --zhu-soft:#e07a5f; --cheong:#6cae8b; --hwang:#d6a23a;
+    --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+    --serif:"Nanum Myeongjo","Batang","Gungsuh",serif;
+    --sans:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  }
+  *{box-sizing:border-box} html,body{margin:0;height:100%}
+  body{background:radial-gradient(120% 90% at 50% -10%, #2a2018 0%, var(--bg) 55%, #161210 100%);
+    color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 26px);mix-blend-mode:overlay}
+  .sig{position:fixed;z-index:0;left:50%;top:46%;transform:translate(-50%,-50%);font-family:var(--serif);
+    font-size:min(74vh,70vw);line-height:1;color:#000;opacity:.05;pointer-events:none;user-select:none;
+    text-shadow:0 0 60px rgba(207,74,44,.25);animation:breathe 9s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.045;transform:translate(-50%,-50%) scale(1)}50%{opacity:.075;transform:translate(-50%,-50%) scale(1.035)}}
+
+  .wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:26px 20px 120px}
+  header{display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+  .topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .brand{display:flex;align-items:baseline;gap:12px;cursor:pointer}
+  .brand .seal{font-family:var(--serif);font-size:28px;color:var(--zhu);border:2px solid var(--zhu);border-radius:7px;
+    padding:1px 9px 4px;line-height:1;letter-spacing:2px;box-shadow:inset 0 0 0 1px rgba(207,74,44,.25)}
+  .brand h1{font-family:var(--serif);font-weight:400;font-size:20px;margin:0;letter-spacing:.5px}
+  .brand h1 b{color:var(--zhu-soft);font-weight:400}
+  .eyebrow{font-size:11px;color:var(--ink-faint);letter-spacing:3px;text-transform:uppercase}
+  .rightslot{display:flex;align-items:center;gap:18px}
+  .stat{font-family:var(--serif);text-align:right} .stat .v{font-size:22px;color:var(--cheong)} .stat .l{font-size:10px;color:var(--ink-faint);letter-spacing:1px}
+  .homebtn{font-family:var(--sans);font-size:13px;background:transparent;color:var(--ink-dim);border:1px solid var(--line-strong);
+    border-radius:9px;padding:8px 15px;cursor:pointer;transition:.16s} .homebtn:hover{border-color:var(--zhu);color:var(--ink)}
+
+  .dots{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+  .dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--line-strong);background:transparent;
+    cursor:pointer;position:relative;transition:.25s;display:grid;place-items:center}
+  .dot span{font-size:8px;color:var(--ink-faint);position:absolute;top:16px;left:50%;transform:translateX(-50%)}
+  .dot.done{background:rgba(108,174,139,.4);border-color:var(--cheong)}
+  .dot.active{background:var(--zhu);border-color:var(--zhu);box-shadow:0 0 0 4px rgba(207,74,44,.18)}
+  .dot:hover{border-color:var(--ink-dim)}
+
+  .stage{background:linear-gradient(180deg,var(--panel) 0%,var(--bg2) 140%);border:1px solid var(--line);
+    border-radius:16px;box-shadow:var(--shadow);padding:30px 30px 34px;min-height:340px;position:relative;overflow:hidden}
+  .stage::after{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .g-num{font-family:var(--serif);font-size:13px;color:var(--zhu);letter-spacing:2px;margin-bottom:6px}
+  .g-title{font-family:var(--serif);font-size:25px;font-weight:400;margin:0 0 4px;letter-spacing:.4px}
+  .g-sub{color:var(--ink-dim);font-size:13.5px;line-height:1.6;margin:0 0 18px;max-width:62ch}
+
+  .banner{display:flex;gap:9px;align-items:flex-start;background:rgba(214,162,58,.09);border:1px solid rgba(214,162,58,.35);
+    border-radius:10px;padding:10px 13px;margin:0 0 18px;font-size:13px;color:#e6cd8e;line-height:1.55}
+  .banner b{color:var(--hwang)} .banner .ic{color:var(--hwang);font-weight:700;flex:none}
+  .banner.flag{background:rgba(207,74,44,.08);border-color:rgba(207,74,44,.4);color:#eab5a6}
+  .banner.flag b{color:var(--zhu-soft)} .banner.flag .ic{color:var(--zhu-soft)}
+
+  .qbox{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:16px;min-height:64px;display:flex;align-items:center}
+  .qtext{font-size:16px;line-height:1.75} .qtext .qlead{font-family:var(--serif);color:var(--zhu-soft);margin-right:8px}
+  .hz{font-family:var(--serif);color:var(--ink);font-size:1.06em} .hz.z{color:var(--zhu-soft)}
+
+  .opts{display:flex;flex-wrap:wrap;gap:10px}
+  .opt{font-family:var(--serif);font-size:18px;letter-spacing:1px;background:var(--panel2);color:var(--ink);border:1px solid var(--line-strong);
+    border-radius:10px;padding:13px 20px;cursor:pointer;transition:.16s;user-select:none;flex:1 1 auto;text-align:center;min-width:96px}
+  .opt:hover{border-color:var(--zhu);transform:translateY(-1px);background:#352a20} .opt:active{transform:translateY(0)}
+  .opt.correct{background:rgba(108,174,139,.16);border-color:var(--cheong);color:#c8ead6;cursor:default}
+  .opt.wrong{background:rgba(207,74,44,.14);border-color:var(--zhu);color:#f3c3b6;cursor:default}
+  .opt.muted{opacity:.4;cursor:default} .opt.reveal{border-color:var(--cheong);box-shadow:0 0 0 2px rgba(108,174,139,.3)}
+  .opt.small{font-size:13.5px;padding:10px 13px;min-width:0;flex:1 1 30%}
+  .opts.aslist{flex-direction:column}
+  .opts.aslist .opt{font-family:var(--sans);font-size:14.5px;letter-spacing:0;text-align:left;flex:1 1 100%;padding:13px 16px;line-height:1.55}
+
+  .mc-list{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+  .mc{display:flex;gap:12px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line-strong);border-radius:10px;
+    padding:12px 15px;cursor:pointer;transition:.14s;font-size:14.5px;line-height:1.5} .mc:hover{border-color:var(--zhu)}
+  .mc .box{flex:none;width:20px;height:20px;border:1.5px solid var(--line-strong);border-radius:5px;margin-top:1px;display:grid;place-items:center;font-size:13px;color:transparent;transition:.14s}
+  .mc .tag{font-family:var(--serif);color:var(--zhu-soft);flex:none}
+  .mc.on{border-color:var(--zhu);background:#352a20} .mc.on .box{background:var(--zhu);border-color:var(--zhu);color:#1b1613}
+  .mc.ok{border-color:var(--cheong);background:rgba(108,174,139,.13)} .mc.ok .box{background:var(--cheong);border-color:var(--cheong);color:#15110d}
+  .mc.bad{border-color:var(--zhu);background:rgba(207,74,44,.13)} .mc.miss{border-color:var(--cheong);box-shadow:0 0 0 2px rgba(108,174,139,.25)}
+  .mc-check{font-family:var(--sans);font-size:13.5px;background:var(--hwang);color:#1b1613;font-weight:700;border:none;border-radius:9px;padding:11px 20px;cursor:pointer;letter-spacing:.5px;transition:.16s}
+  .mc-check:hover{filter:brightness(1.08)} .mc-check.hide{display:none}
+
+  .fb{margin-top:16px;border-radius:11px;padding:14px 16px;font-size:13.5px;line-height:1.65;border:1px solid var(--line);background:var(--bg2);display:none}
+  .fb.show{display:block;animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .fb .verdict{font-family:var(--serif);font-size:15px;margin-bottom:5px;display:flex;align-items:center;gap:8px}
+  .fb.ok .verdict{color:var(--cheong)} .fb.no .verdict{color:var(--zhu-soft)}
+  .fb .note{color:var(--ink-dim)} .fb .note b{color:var(--ink)}
+
+  .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px}
+  .meter{font-size:12.5px;color:var(--ink-faint);letter-spacing:.5px;font-family:var(--serif)} .meter b{color:var(--zhu-soft)}
+  .nextq{font-family:var(--sans);font-size:13.5px;background:var(--zhu);color:#1b1613;font-weight:700;border:none;border-radius:9px;padding:11px 20px;cursor:pointer;letter-spacing:.5px;transition:.16s;display:none}
+  .nextq.show{display:inline-block} .nextq:hover{background:var(--zhu-soft)} .nextq.done{background:var(--cheong)}
+
+  .slot-layout{margin-bottom:18px}
+  .slot{display:inline-flex;align-items:center;justify-content:center;min-width:74px;min-height:44px;padding:6px 12px;border:1.5px dashed var(--line-strong);
+    border-radius:9px;font-family:var(--serif);font-size:17px;color:var(--ink-faint);cursor:pointer;transition:.16s;vertical-align:middle;background:rgba(0,0,0,.12)}
+  .slot.sel-target{border-color:var(--zhu);box-shadow:0 0 0 3px rgba(207,74,44,.16)}
+  .slot.filled{border-style:solid;border-color:var(--cheong);color:#cdeada;background:rgba(108,174,139,.12);cursor:default}
+  .slot.shake{animation:shake .3s} @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .static-box{display:inline-flex;align-items:center;justify-content:center;min-width:60px;min-height:40px;padding:5px 11px;border:1px solid var(--line);
+    border-radius:8px;font-family:var(--serif);font-size:15px;color:var(--ink-dim);vertical-align:middle;background:rgba(255,255,255,.02)}
+  .arrow{color:var(--zhu);font-size:15px;margin:0 4px}
+  .tier-label{font-size:11px;color:var(--ink-faint);letter-spacing:2px;margin:14px 0 7px;text-transform:uppercase}
+  .defrow{display:flex;align-items:center;gap:12px;margin:9px 0;flex-wrap:wrap}
+  .defrow .ph{font-family:var(--serif);font-size:15px;color:var(--ink-dim);flex:1;min-width:240px;line-height:1.5} .defrow .eq{color:var(--zhu);font-family:var(--serif)}
+  .bank{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px;padding-top:16px;border-top:1px solid var(--line)}
+  .chip{font-family:var(--serif);font-size:16px;background:var(--panel2);border:1px solid var(--line-strong);border-radius:9px;padding:9px 16px;cursor:pointer;transition:.14s;user-select:none}
+  .chip:hover{border-color:var(--zhu);transform:translateY(-1px)} .chip.sel{background:var(--zhu);color:#1b1613;border-color:var(--zhu)}
+  .chip.used{opacity:.25;pointer-events:none;text-decoration:line-through}
+
+  table.cmp{border-collapse:collapse;width:100%;margin-bottom:6px;font-size:13.5px}
+  table.cmp th,table.cmp td{border:1px solid var(--line);padding:7px 5px;text-align:center}
+  table.cmp th{font-family:var(--serif);color:var(--zhu-soft);font-weight:400;font-size:12.5px;background:rgba(0,0,0,.18)}
+  table.cmp td.rowhead{font-family:var(--serif);color:var(--ink);font-size:16px;background:rgba(0,0,0,.18)}
+  table.cmp td .slot{min-width:52px;min-height:34px;font-size:13.5px;padding:3px 5px} table.cmp td.pre{font-family:var(--serif);color:var(--ink-dim);font-size:13px}
+  table.grid{border-collapse:collapse;margin:0 auto 6px;font-size:15px}
+  table.grid th,table.grid td{border:1px solid var(--line);padding:10px 14px;text-align:center}
+  table.grid th{font-family:var(--serif);color:var(--zhu-soft);font-weight:400;font-size:14px;background:rgba(0,0,0,.18)}
+  table.grid td.rowhead{font-family:var(--serif);color:var(--ink);font-size:14px;background:rgba(0,0,0,.18);white-space:nowrap}
+  .sanbao{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+  .sanbao .pair{display:flex;flex-direction:column;align-items:center;gap:6px} .sanbao .pair .lab{font-family:var(--serif);font-size:18px;color:var(--ink-dim)}
+
+  .order-status{font-family:var(--serif);font-size:14px;color:var(--ink-dim);margin-bottom:14px} .order-status b{color:var(--zhu-soft)}
+  .order-cards{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:6px}
+  .ocard{position:relative;flex:1 1 150px;min-width:140px;background:var(--panel2);border:1px solid var(--line-strong);border-radius:12px;padding:16px 16px 14px;cursor:pointer;transition:.16s}
+  .ocard:hover{border-color:var(--zhu);transform:translateY(-2px)} .ocard:active{transform:none}
+  .ocard .lab{font-family:var(--serif);font-size:20px;margin-bottom:6px} .ocard .gl{font-size:12px;color:var(--ink-dim);line-height:1.5}
+  .ocard.locked{border-color:var(--cheong);background:rgba(108,174,139,.12);cursor:default} .ocard.locked .lab{color:#cdeada}
+  .ocard .badge{position:absolute;top:-9px;left:-9px;width:26px;height:26px;border-radius:50%;background:var(--cheong);color:#15110d;font-family:var(--serif);font-weight:700;display:none;align-items:center;justify-content:center;font-size:14px}
+  .ocard.locked .badge{display:flex} .ocard.shake{animation:shake .3s}
+
+  .lead{font-size:15px;line-height:1.85;color:var(--ink-dim);max-width:62ch;margin:0 0 22px} .lead b{color:var(--ink)}
+  .menu{display:flex;flex-direction:column;gap:2px;margin:6px 0 22px}
+  .menu .it{display:flex;gap:13px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line)}
+  .menu .it .n{font-family:var(--serif);color:var(--zhu);font-size:15px;flex:none;width:30px} .menu .it .t{font-family:var(--serif);font-size:16px}
+  .start-cta{font-family:var(--serif);font-size:16px;color:var(--zhu-soft);margin-top:6px}
+
+  .home-grid{display:flex;flex-direction:column;gap:12px}
+  .home-card{display:flex;align-items:center;gap:17px;background:rgba(0,0,0,.14);border:1px solid var(--line);border-radius:13px;padding:16px 18px;cursor:pointer;transition:.18s}
+  .home-card:hover{border-color:var(--zhu);transform:translateY(-2px);background:#2c241b}
+  .home-card .ko{font-family:var(--serif);font-size:28px;color:var(--zhu);width:44px;text-align:center;flex:none}
+  .home-card .body{flex:1;min-width:0}
+  .home-card .t{font-family:var(--serif);font-size:17px;margin-bottom:3px;display:flex;align-items:baseline;gap:9px}
+  .home-card .t .gm{font-size:11.5px;color:var(--ink-faint);font-family:var(--sans);flex:none}
+  .home-card .d{color:var(--ink-dim);font-size:12.5px;line-height:1.45}
+  .home-card .go{color:var(--ink-faint);font-size:18px;flex:none;transition:.18s}
+  .home-card:hover .go{color:var(--zhu-soft);transform:translateX(3px)}
+
+  .scoreline{font-family:var(--serif);font-size:20px;margin:18px 0 8px} .scoreline b{color:var(--cheong)}
+  .bargrid{display:flex;flex-direction:column;gap:8px;margin:16px 0 8px}
+  .bargrid .b{display:flex;align-items:center;gap:12px;font-size:13px}
+  .bargrid .b .nm{font-family:var(--serif);flex:none;color:var(--ink-dim);min-width:185px}
+  .bargrid .b .track{flex:1;height:8px;background:rgba(0,0,0,.3);border-radius:5px;overflow:hidden}
+  .bargrid .b .fill{height:100%;background:linear-gradient(90deg,var(--zhu),var(--cheong));border-radius:5px;transition:width .6s}
+  .bargrid .b .pc{font-family:var(--serif);color:var(--ink-dim);width:54px;text-align:right}
+  .restart{font-family:var(--sans);font-size:13.5px;background:transparent;color:var(--ink-dim);border:1px solid var(--line-strong);border-radius:9px;padding:10px 18px;cursor:pointer;margin-top:14px}
+  .restart:hover{border-color:var(--zhu);color:var(--ink)}
+
+  .footbar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;gap:18px;align-items:center;padding:13px;
+    background:linear-gradient(0deg,var(--bg) 60%,transparent);font-size:13px;color:var(--ink-dim);flex-wrap:wrap}
+  .footbar.hide{display:none}
+  .footbar .grp{display:flex;align-items:center;gap:8px} .footbar .lbl{color:var(--ink-faint)}
+  kbd{font-family:var(--sans);background:#3a2f23;border:1px solid var(--line-strong);border-bottom-width:2px;border-radius:6px;padding:2px 9px;font-size:12px;color:var(--ink);letter-spacing:1px}
+
+  @media(max-width:620px){
+    .wrap{padding:18px 13px 130px} .stage{padding:22px 18px 26px} .g-title{font-size:21px}
+    .opt{font-size:16px;padding:12px 14px;min-width:0;flex:1 1 28%} .opt.small{flex:1 1 45%}
+    table.cmp{font-size:11.5px} table.grid{font-size:13px} .bargrid .b .nm{min-width:120px;font-size:12px}
+    .ocard{flex:1 1 44%;min-width:0} .home-card .d{display:none} .defrow .ph{min-width:0}
+  }
+  @media(prefers-reduced-motion:reduce){.sig{animation:none}.fb.show{animation:none}.slot.shake,.ocard.shake{animation:none}}
+</style>
+</head>
+<body>
+<div class="sig" id="sig" aria-hidden="true">氣</div>
+<div class="wrap">
+  <header>
+    <div class="topline">
+      <div class="brand" id="brand">
+        <div class="seal" id="seal">氣</div>
+        <div>
+          <div class="eyebrow">韓醫學槪論 · 編4</div>
+          <h1>精氣神血津液 <b>학습 허브</b></h1>
+        </div>
+      </div>
+      <div class="rightslot" id="rightslot"></div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </header>
+  <main class="stage" id="stage"></main>
+</div>
+<div class="footbar" id="footbar">
+  <div class="grp"><kbd>Space</kbd><span class="lbl">다음 게임</span></div>
+  <div class="grp"><kbd>&larr;</kbd><span class="lbl">이전 / 홈</span></div>
+  <div class="grp"><span class="lbl">답·배치·순서는</span><span>마우스 클릭</span></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  function el(tag, attrs, html){
+    var n=document.createElement(tag);
+    if(attrs) for(var k in attrs){ if(k==="class")n.className=attrs[k]; else n.setAttribute(k,attrs[k]); }
+    if(html!=null) n.innerHTML=html; return n;
+  }
+  function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+  function bannerEl(text, flag){
+    var b=el("div",{class:"banner"+(flag?" flag":"")});
+    b.appendChild(el("span",{class:"ic"}, flag?"\u203b":"\u26a0")); b.appendChild(el("span",null,text)); return b;
+  }
+  var SCORE={}, CURRENT=null;
+  function recordScore(num,c,t){ if(!SCORE[CURRENT])SCORE[CURRENT]={}; SCORE[CURRENT][num]={correct:c,total:t}; renderDots(); }
+
+  /* ===== ENGINES (superset) ===== */
+  function PickGame(cfg){
+    return { id:cfg.num,num:cfg.num,title:cfg.title, mount:function(root){
+      var order=shuffle(cfg.items), i=0, correct=0, total=order.length;
+      root.appendChild(el("div",{class:"g-num"},"\uac8c\uc784 "+cfg.num));
+      root.appendChild(el("h2",{class:"g-title"},cfg.title));
+      root.appendChild(el("p",{class:"g-sub"},cfg.sub));
+      if(cfg.banner) root.appendChild(bannerEl(cfg.banner, cfg.flag));
+      var qbox=el("div",{class:"qbox"}),qtext=el("div",{class:"qtext"});qbox.appendChild(qtext);
+      var opts=el("div",{class:"opts"+(cfg.list?" aslist":"")}),fb=el("div",{class:"fb"}),rowEl=el("div",{class:"row"});
+      var meter=el("div",{class:"meter"}),nextBtn=el("button",{class:"nextq"},"\ub2e4\uc74c \ubb38\ud56d \u25b8");
+      rowEl.appendChild(meter);rowEl.appendChild(nextBtn);
+      root.appendChild(qbox);root.appendChild(opts);root.appendChild(fb);root.appendChild(rowEl);
+      nextBtn.addEventListener("click",function(){ i++; render(); });
+      function um(){ meter.innerHTML="\ubb38\ud56d <b>"+Math.min(i+1,total)+"</b> / "+total+" \u00b7 \uc815\ub2f5 <b>"+correct+"</b>"; }
+      function render(){
+        fb.className="fb";fb.innerHTML="";nextBtn.className="nextq";nextBtn.textContent="\ub2e4\uc74c \ubb38\ud56d \u25b8";opts.innerHTML="";
+        if(i>=total){
+          qbox.style.display="none";opts.style.display="none";fb.className="fb show ok";
+          fb.innerHTML='<div class="verdict">\u25c7 \uac8c\uc784 \uc644\ub8cc</div><div class="note">'+correct+' / '+total+' \uc815\ub2f5. <b>Space</b> \ub85c \ub2e4\uc74c\uc73c\ub85c.</div>';
+          meter.innerHTML="\uc644\ub8cc \u00b7 \uc815\ub2f5 <b>"+correct+"</b> / "+total; recordScore(cfg.num,correct,total); return;
+        }
+        qbox.style.display="";opts.style.display="";
+        var it=order[i]; qtext.innerHTML=it.q;
+        var choices=(it.options||cfg.defaultOptions);
+        var sm=(!cfg.list)&&(choices.length>4);
+        choices.forEach(function(c){
+          var o=el("div",{class:"opt"+(sm?" small":"")},c);
+          o.addEventListener("click",function(){ choose(it,c,o); }); opts.appendChild(o);
+        });
+        um();
+      }
+      function choose(it,c,node){
+        opts.querySelectorAll(".opt").forEach(function(n){
+          n.style.pointerEvents="none";
+          if(n.textContent===it.answer) n.classList.add(n===node?"correct":"reveal");
+          else if(n===node) n.classList.add("wrong"); else n.classList.add("muted");
+        });
+        var ok=(c===it.answer); if(ok) correct++;
+        fb.className="fb show "+(ok?"ok":"no");
+        var head = ok?"\u25cb \uc815\ub2f5":(cfg.list?"\u2715 \uc624\ub2f5":"\u2715 \uc624\ub2f5 \u2014 \uc815\ub2f5: "+it.answer);
+        fb.innerHTML='<div class="verdict">'+head+'</div><div class="note">'+it.note+'</div>';
+        nextBtn.className="nextq show"+(i===total-1?" done":""); if(i===total-1) nextBtn.textContent="\uacb0\uacfc \u25b8";
+        um();
+      }
+      render();
+    }};
+  }
+
+  function SlotGame(cfg){
+    return { id:cfg.num,num:cfg.num,title:cfg.title, mount:function(root){
+      root.appendChild(el("div",{class:"g-num"},"\uac8c\uc784 "+cfg.num));
+      root.appendChild(el("h2",{class:"g-title"},cfg.title));
+      root.appendChild(el("p",{class:"g-sub"},cfg.sub));
+      if(cfg.banner) root.appendChild(bannerEl(cfg.banner, cfg.flag));
+      var built=cfg.build(); root.appendChild(built.root);
+      var slots=built.slots, totalSlots=slots.length, filled=0;
+      var bankEl=el("div",{class:"bank"});
+      var chips=shuffle(cfg.bank).map(function(w){var c=el("div",{class:"chip"},w);c.dataset.word=w;return c;});
+      chips.forEach(function(c){ bankEl.appendChild(c); }); root.appendChild(bankEl);
+      var fb=el("div",{class:"fb"}); root.appendChild(fb);
+      var meter=el("div",{class:"meter"}); meter.style.marginTop="14px"; root.appendChild(meter);
+      var selChip=null;
+      function sm(){ meter.innerHTML="\ucc44\uc6b4 \uce78 <b>"+filled+"</b> / "+totalSlots; } sm();
+      chips.forEach(function(c){ c.addEventListener("click",function(){
+        if(c.classList.contains("used"))return;
+        if(selChip===c){selChip=null;c.classList.remove("sel");ct();return;}
+        chips.forEach(function(x){x.classList.remove("sel");}); c.classList.add("sel");selChip=c;mt(c.dataset.word);
+      });});
+      function mt(word){ slots.forEach(function(s){ if(!s.el.classList.contains("filled") && s.accept.indexOf(word)>=0) s.el.classList.add("sel-target"); else s.el.classList.remove("sel-target"); }); }
+      function ct(){ slots.forEach(function(s){ s.el.classList.remove("sel-target"); }); }
+      slots.forEach(function(s){ s.el.addEventListener("click",function(){
+        if(s.el.classList.contains("filled"))return; if(!selChip)return;
+        var word=selChip.dataset.word;
+        if(s.accept.indexOf(word)>=0){
+          s.el.textContent=word;s.el.classList.add("filled");s.el.classList.remove("sel-target");
+          selChip.classList.add("used");selChip.classList.remove("sel");selChip=null;ct(); filled++;sm(); if(filled===totalSlots) fin();
+        } else { s.el.classList.add("shake"); setTimeout(function(){s.el.classList.remove("shake");},320); }
+      });});
+      function fin(){ fb.className="fb show ok"; fb.innerHTML='<div class="verdict">\u25c7 \ubaa8\ub450 \ucc44\uc6c0</div><div class="note">\uc644\uc131\ub410\uc2b5\ub2c8\ub2e4. <b>Space</b> \ub85c \ub2e4\uc74c\uc73c\ub85c.</div>'; recordScore(cfg.num,totalSlots,totalSlots); }
+    }};
+  }
+
+  function OrderGame(cfg){
+    return { id:cfg.num,num:cfg.num,title:cfg.title, mount:function(root){
+      root.appendChild(el("div",{class:"g-num"},"\uac8c\uc784 "+cfg.num));
+      root.appendChild(el("h2",{class:"g-title"},cfg.title));
+      root.appendChild(el("p",{class:"g-sub"},cfg.sub));
+      if(cfg.banner) root.appendChild(bannerEl(cfg.banner, cfg.flag));
+      var seq=cfg.sequence, total=seq.length, next=0, miss=0;
+      var doneLabel=cfg.doneLabel || seq.map(function(s){return s.label;}).join(" \u2192 ");
+      var status=el("div",{class:"order-status"}); root.appendChild(status);
+      var area=el("div",{class:"order-cards"}); root.appendChild(area);
+      var fb=el("div",{class:"fb"}); root.appendChild(fb);
+      function ss(){ status.innerHTML='\uc21c\uc11c\ub300\ub85c \ud074\ub9ad\ud558\uc138\uc694 \u2014 \ud604\uc7ac <b>'+(next+1>total?total:next+1)+'</b> / '+total+' \ubc88\uc9f8'; }
+      shuffle(seq.map(function(s,idx){return {pos:idx,s:s};})).forEach(function(item){
+        var c=el("div",{class:"ocard"}); c.dataset.pos=item.pos;
+        c.appendChild(el("div",{class:"badge"})); c.appendChild(el("div",{class:"lab"},item.s.label)); c.appendChild(el("div",{class:"gl"},item.s.gloss));
+        c.addEventListener("click",function(){ pick(c,item); }); area.appendChild(c);
+      });
+      ss();
+      function pick(c,item){
+        if(c.classList.contains("locked"))return;
+        if(item.pos===next){
+          c.classList.add("locked"); c.querySelector(".badge").textContent=(next+1); next++;
+          if(next===total){ fb.className="fb show ok"; var sc=Math.max(0,total-miss);
+            fb.innerHTML='<div class="verdict">\u25c7 \uc21c\uc11c \uc644\uc131 \u2014 '+doneLabel+'</div><div class="note">\uc624\ub2f5 \ud074\ub9ad '+miss+'\ud68c. <b>Space</b> \ub85c \ub2e4\uc74c\uc73c\ub85c.</div>';
+            recordScore(cfg.num, sc, total); status.innerHTML='\uc644\uc131 \u00b7 '+doneLabel;
+          } else ss();
+        } else { miss++; c.classList.add("shake"); setTimeout(function(){c.classList.remove("shake");},320);
+          fb.className="fb show no"; fb.innerHTML='<div class="verdict">\u2715 \uc544\uc9c1 \ucc28\ub840\uac00 \uc544\ub2d9\ub2c8\ub2e4</div><div class="note">\ud604\uc7ac \ucc28\ub840\ub294 <b>'+(next+1)+'</b>\ubc88\uc9f8: '+seq[next].label+' \u2014 '+seq[next].hint+'</div>';
+        }
+      }
+    }};
+  }
+
+  function MultiGame(cfg){
+    return { id:cfg.num,num:cfg.num,title:cfg.title, mount:function(root){
+      var order=shuffle(cfg.items), i=0, correct=0, total=order.length;
+      root.appendChild(el("div",{class:"g-num"},"\uac8c\uc784 "+cfg.num));
+      root.appendChild(el("h2",{class:"g-title"},cfg.title));
+      root.appendChild(el("p",{class:"g-sub"},cfg.sub));
+      if(cfg.banner) root.appendChild(bannerEl(cfg.banner, cfg.flag));
+      var qbox=el("div",{class:"qbox"}),qtext=el("div",{class:"qtext"});qbox.appendChild(qtext);
+      var list=el("div",{class:"mc-list"}),fb=el("div",{class:"fb"}),rowEl=el("div",{class:"row"});
+      var meter=el("div",{class:"meter"});
+      var checkBtn=el("button",{class:"mc-check"},"\ucc44\uc810 \u25b8"), nextBtn=el("button",{class:"nextq"},"\ub2e4\uc74c \ubb38\ud56d \u25b8");
+      var bw=el("div"); bw.appendChild(checkBtn); bw.appendChild(nextBtn); rowEl.appendChild(meter); rowEl.appendChild(bw);
+      root.appendChild(qbox);root.appendChild(list);root.appendChild(fb);root.appendChild(rowEl);
+      var TAGS=["\u3131","\u3134","\u3137","\u3139","\u3141","\u3142"];
+      nextBtn.addEventListener("click",function(){ i++; render(); }); checkBtn.addEventListener("click",grade);
+      function um(){ meter.innerHTML="\ubb38\ud56d <b>"+Math.min(i+1,total)+"</b> / "+total+" \u00b7 \uc815\ub2f5 <b>"+correct+"</b>"; }
+      function render(){
+        fb.className="fb";fb.innerHTML="";nextBtn.className="nextq";checkBtn.className="mc-check";nextBtn.textContent="\ub2e4\uc74c \ubb38\ud56d \u25b8";list.innerHTML="";
+        if(i>=total){
+          qbox.style.display="none";list.style.display="none";checkBtn.className="mc-check hide";fb.className="fb show ok";
+          fb.innerHTML='<div class="verdict">\u25c7 \uac8c\uc784 \uc644\ub8cc</div><div class="note">'+correct+' / '+total+' \uc815\ub2f5. <b>Space</b> \ub85c \ub2e4\uc74c\uc73c\ub85c.</div>';
+          meter.innerHTML="\uc644\ub8cc \u00b7 \uc815\ub2f5 <b>"+correct+"</b> / "+total; recordScore(cfg.num,correct,total); return;
+        }
+        qbox.style.display="";list.style.display="";
+        var it=order[i]; qtext.innerHTML='<span class="qlead">\uc637\uc740 \uac83\uc744 \ubaa8\ub450 \uace0\ub974\uc2dc\uc624.</span>'+it.q;
+        it.choices.forEach(function(ch,idx){
+          var row=el("div",{class:"mc"}); row.dataset.ok=ch.ok?"1":"0";
+          row.appendChild(el("div",{class:"box"},"\u2713")); row.appendChild(el("div",{class:"tag"},TAGS[idx])); row.appendChild(el("div",null,ch.t));
+          row.addEventListener("click",function(){ if(checkBtn.classList.contains("hide"))return; row.classList.toggle("on"); }); list.appendChild(row);
+        });
+        um();
+      }
+      function grade(){
+        var rows=list.querySelectorAll(".mc"), exact=true;
+        rows.forEach(function(r){ var sel=r.classList.contains("on"), ok=r.dataset.ok==="1"; r.style.pointerEvents="none";
+          if(ok&&sel) r.classList.add("ok"); else if(ok&&!sel){ r.classList.add("miss"); exact=false; } else if(!ok&&sel){ r.classList.add("bad"); exact=false; } });
+        if(exact) correct++; checkBtn.className="mc-check hide"; fb.className="fb show "+(exact?"ok":"no");
+        var it=order[i];
+        fb.innerHTML='<div class="verdict">'+(exact?"\u25cb \uc815\ud655\ud788 \uc77c\uce58":"\u2715 \ubd88\uc77c\uce58 \u2014 \uc815\ub2f5: "+it.ans)+'</div><div class="note">'+it.note+'</div>';
+        nextBtn.className="nextq show"+(i===total-1?" done":""); if(i===total-1) nextBtn.textContent="\uacb0\uacfc \u25b8"; um();
+      }
+      render();
+    }};
+  }
+
+  /* ===== SECTIONS (injected) ===== */
+  var SECTIONS = [];
+SECTIONS.push({ key:"qi", char:"氣", name:"氣 엔진", count:7, intro:"元宗營衛의 귀속, 6대 기능, 氣機失調까지 — 단원 최대 함정밭.",
+  build:function(){
+/* --- 게임 2 · 氣 6기능 매칭전 --- */
+  var G2 = PickGame({
+    num:2, title:"氣 6기능 매칭전",
+    sub:"각 설명·증상이 氣의 어느 작용인지 고르세요. 推動·溫煦·防禦·固攝·氣化·營養 여섯 가지.",
+    banner:'<b>固攝</b>작용 = 血·汗·尿·精液을 잡는 것. 內臟의 위치 고정은 고섭으로 보지 않습니다(×).',
+    defaultOptions:["推動","溫煦","防禦","固攝","氣化","營養"],
+    items:[
+      {q:'생장발육과 <span class="hz">臟腑·經絡</span>·조직기관의 생명활동을 추진하고, 血의 생성·운행과 津液의 생성·수포를 촉진한다.',
+        answer:"推動", note:'血의 생성·운행, 津液의 생성·수포·배설을 모두 밀어준다. <b>심기·종기가 부족하면 추동력이 약해져 血瘀</b>에 이른다.'},
+      {q:'<span class="hz z">氣主煦之</span>(난경) — 정상 체온을 유지한다. 心火·脾陽·腎陽·命門火·肺胃와 관련.',
+        answer:"溫煦", note:'실조 시 <span class="hz">溫煦不足而爲寒</span>(외한·희열·사지불온·체온저하). 반대로 기울이 화로 변하면 발열.'},
+      {q:'<span class="hz z">邪氣所湊 其氣必虛</span> — 衛氣가 기표를 호위하고 주리 개합을 조절해 外邪 침입을 막는다.',
+        answer:"防禦", note:'실조 시 易感冒·외한·자한. <b>衛氣虛</b>와 직결.'},
+      {q:'血·汗·尿·精液이 함부로 새어나가지 않도록 잡아 통섭한다.',
+        answer:"固攝", note:'氣不攝血→출혈, 津液失攝→유뇨·야뇨·한출, 氣不攝精→유정·활정·조설.'},
+      {q:'<span class="hz z">陽化氣 陰成形</span> — 精氣血津液의 생성·대사와 그 상호전화를 주관한다.',
+        answer:"氣化", note:'氣의 운동과 그에 따르는 변화. <b>생명활동의 본질</b>이 곧 氣化작용.'},
+      {q:'<span class="hz z">氣者 精神之根蔕也</span> — 인체에 영양을 공급한다.',
+        answer:"營養", note:'6기능 중 영양작용. "기는 정신의 뿌리"라는 표현과 연결.'},
+      {q:'<span class="hz">脾統血</span> — 혈이 맥관 밖으로 빠져나가지 않게 통섭하는 작용.',
+        answer:"固攝", note:'고섭의 대표 예. 단 고섭의 대상은 血·汗·尿·精液이며 <b>내장 위치 고정은 고섭으로 보지 않는다</b>.'},
+      {q:'음식물에서 水穀精氣를 분화해 營·衛를 만들고, 肺의 淸氣와 결합해 宗氣를, 腎中精으로 元氣를 化生한다.',
+        answer:"氣化", note:'氣의 化生 = 氣化작용의 핵심 국면. 淸氣가 濁氣로 전화되는 것도 氣化.'}
+    ]
+  });
+
+  /* --- 게임 3 · 氣 분류 계통수 --- */
+  var G3 = SlotGame({
+    num:3, title:"氣 분류 계통수",
+    sub:"세 來源이 결합해 眞氣(正氣)가 되고, 다시 여러 氣로 나뉩니다. 빈칸을 word bank에서 골라 채우세요.",
+    banner:'<b>곡기·진기·정기</b> 구분: 곡기=水穀之精氣, 진기가 경락에 들면 <b>經氣</b>, 항병능력을 나타내며 邪氣와 짝하는 것은 <b>正氣</b>.',
+    bank:["天氣","穀氣","元氣","眞氣","經氣","正氣","宗氣","衛氣"],
+    build:function(){
+      var root=el("div",{class:"slot-layout"});
+      function slot(accept){ var s=el("div",{class:"slot"},"?"); return {el:s,accept:accept}; }
+
+      var srcAccept=["天氣","穀氣","元氣"];
+      var s1=slot(srcAccept), s2=slot(srcAccept), s3=slot(srcAccept);
+      var s4=slot(["眞氣"]);
+      var c1=slot(["經氣"]), c2=slot(["正氣"]);
+
+      // 來源 행
+      root.appendChild(el("div",{class:"tier-label"},"來源 (세 가지 재료)"));
+      var line1=el("div");
+      line1.appendChild(s1.el); line1.appendChild(el("span",{class:"arrow"},"＋"));
+      line1.appendChild(s2.el); line1.appendChild(el("span",{class:"arrow"},"＋"));
+      line1.appendChild(s3.el);
+      line1.appendChild(el("span",{class:"static-box"},"五臟六腑·經脈之間"));
+      root.appendChild(line1);
+
+      // 결합 → 진기
+      root.appendChild(el("div",{class:"tier-label"},"結合 → 充澤而産生"));
+      var line2=el("div");
+      line2.appendChild(s4.el);
+      line2.appendChild(el("span",{class:"static-box"},"＝ 一身之氣의 근간"));
+      root.appendChild(line2);
+
+      // 분류 (정적)
+      root.appendChild(el("div",{class:"tier-label"},"眞氣의 分類"));
+      var line3=el("div",{class:"slot-layout"});
+      ["宗氣","衛氣","榮氣","中氣","臟氣","腑氣","經氣"].forEach(function(w,idx){
+        if(idx) line3.appendChild(el("span",{class:"arrow"},"·"));
+        line3.appendChild(el("span",{class:"static-box"},w));
+      });
+      root.appendChild(line3);
+
+      // 개념 빈칸
+      root.appendChild(el("div",{class:"tier-label"},"개념 빈칸"));
+      var line4=el("div");
+      line4.appendChild(el("span",{class:"static-box"},"眞氣가 경락에 들어가면"));
+      line4.appendChild(c1.el);
+      line4.appendChild(el("span",{class:"static-box"},"／ 邪氣와 상대되는 항병의 氣 ="));
+      line4.appendChild(c2.el);
+      root.appendChild(line4);
+
+      return {root:root, slots:[s1,s2,s3,s4,c1,c2]};
+    }
+  });
+
+  /* --- 게임 4 · 四氣 카드 분류기 --- */
+  var G4 = PickGame({
+    num:4, title:"四氣 카드 분류기",
+    sub:"각 속성(생성·분포·성능·원문·이명)이 元氣·宗氣·營氣·衛氣 중 어디에 속하는지 고르세요.",
+    banner:'營·衛 둘 다 水穀精微에서 났지만, <b>慓疾滑利한 悍氣</b>는 衛氣, <b>津液을 흡수해 脈中으로 渗注</b>하는 것은 營氣.',
+    defaultOptions:["元氣","宗氣","營氣","衛氣"],
+    items:[
+      {q:'<span class="hz">腎中精氣</span>에서 化生하며, 三焦를 통해 전신에 분포한다.', answer:"元氣",
+        note:'<span class="hz z">三焦者 元氣之別使</span>. 命門者 諸神精之所舍, 原氣之所係也(난경 36난).'},
+      {q:'생명활동의 原動力으로, 생장발육·생식을 추진한다.', answer:"元氣",
+        note:'이명 = <span class="hz">眞氣·原氣·生氣·眞元之氣</span>. 충기(充氣)는 元氣의 이명이 아님(함정).'},
+      {q:'<span class="hz">胸中(膻中·氣海)</span>에 쌓이며, 穀氣와 自然清氣가 결합해 생성된다.', answer:"宗氣",
+        note:'宗氣積于胸中, 出于喉嚨, 以貫心脈而行呼吸焉.'},
+      {q:'<span class="hz">虛里</span>의 박동으로 그 盛衰를 진단한다.', answer:"宗氣",
+        note:'胃之大絡 名曰虛里…出於左乳下 其動應衣 脈宗氣也(평인기상론).'},
+      {q:'<span class="hz">脈中</span>을 行하며 血을 化生하고 전신을 營養한다.', answer:"營氣",
+        note:'<span class="hz z">營者 水穀之精氣也</span>. 이명 = 營血·營陰. 中焦에서 起始해 十二經脈 순행.'},
+      {q:'水穀 중의 津液을 흡수해 脈中으로 渗注入한다.', answer:"營氣",
+        note:'營氣者 泌其津液 注之于脈 化以爲血(영추 사객). 그래서 血의 주요 구성성분.'},
+      {q:'<span class="hz">脈外</span>를 行하며 外邪 침입을 방어한다.', answer:"衛氣",
+        note:'이명 = <span class="hz">衛陽·浮氣·濁氣</span>. 衛者 元氣之別名 이라고도 함.'},
+      {q:'<span class="hz z">溫分肉 充皮膚 肥腠理 司開闔</span> 하는 것이다.', answer:"衛氣",
+        note:'衛氣者 所以溫分肉 充皮膚 肥腠理 司開闔者也(영추 본장).'},
+      {q:'낮에는 陽分을 25주, 밤에는 陰分을 25주 운행한다.', answer:"衛氣",
+        note:'平旦 目開時 안목에서 起始. 慓疾滑利하여 脈中에 들지 않고 脈外로 행함.'},
+      {q:'臟腑之氣·經絡之氣의 물질적 기초가 된다.', answer:"元氣",
+        note:'어떤 장부/경락에 元氣가 분포하면 곧 그 장부지기·경락지기가 된다.'},
+      {q:'走息道하여 호흡·언어·성음을 主하고, 貫心脈하여 심박을 主한다.', answer:"宗氣",
+        note:'宗氣의 두 방향. 言語·聲音·呼吸이 모두 宗氣와 밀접.'},
+      {q:'中焦(脾胃)에서 化生되며, 屬陰·主血·性靜主守한다.', answer:"營氣",
+        note:'營在脈中·主靜主守·屬陰. 衛(脈外·慓疾滑利·屬陽)와 짝.'}
+    ]
+  });
+
+  /* --- 게임 5 · 元氣 vs 宗氣 역할 충돌전 --- */
+  var G5 = PickGame({
+    num:5, title:"元氣 vs 宗氣 역할 충돌전",
+    sub:"역할 바꿔치기 함정 면역 훈련. 각 서술이 元氣의 것인지 宗氣의 것인지 가르세요.",
+    banner:'핵심 가름: 경락이 <b>기능·활동하는 基礎</b>는 元(原)氣, 경락 <b>循環의 原動力·氣血을 運行하게 하는 推進에너지</b>는 宗氣.',
+    defaultOptions:["元氣","宗氣"],
+    items:[
+      {q:'생장발육과 臟腑·經絡 등 조직기관의 생리활동을 推動한다.', answer:"元氣",
+        note:'生長發育·臟腑機能活動을 推動하는 氣 → 元氣(眞氣).'},
+      {q:'경락이 機能하고 活動하는 基礎가 된다.', answer:"元氣",
+        note:'함정 단골. 經絡이 기능·활동하는 基礎 → 原(元)氣.'},
+      {q:'경락 循環의 原動力이다.', answer:"宗氣",
+        note:'經絡循環의 原動力 → 宗氣. 위 "基礎(元氣)"와 반드시 구별.'},
+      {q:'경락이 氣血을 運行하게 하는 推進에너지다.', answer:"宗氣",
+        note:'營衛氣 순행을 미는 推動에너지 → 宗氣.'},
+      {q:'腎中精氣에서 化生하여 三焦의 別使로 전신을 운행한다.', answer:"元氣",
+        note:'三焦者 元氣之別使. 元氣의 생성·통로.'},
+      {q:'胸中(氣海)에 積聚하며 穀氣와 淸氣가 결합한 後天之氣다.', answer:"宗氣",
+        note:'宗氣 = 水穀精氣 + 自然清氣. 膻中에 모임.'},
+      {q:'貫心脈하여 心搏의 강약·규율을 主한다.', answer:"宗氣",
+        note:'宗氣 貫心脈, 行氣血. 虛里 박동으로 성쇠 판단.'},
+      {q:'<span class="hz">命門者 原氣之所係也</span> — 그 근본이 命門에 매여 있다.', answer:"元氣",
+        note:'난경 36난. 命門爲元氣之本(景岳全書).'},
+      {q:'走息道하여 호흡과 음성 강약을 조절한다.', answer:"宗氣",
+        note:'宗氣 走息道. 言語·聲音이 宗氣와 밀접.'},
+      {q:'여러 氣를 다스리고 인체의 氣化를 총괄하는 一身之氣의 근본이다.', answer:"元氣",
+        note:'元氣가 모든 氣를 다스리고 氣化를 총괄.'}
+    ]
+  });
+
+  /* --- 게임 6 · 營衛 비교표 채우기 --- */
+  var G6 = SlotGame({
+    num:6, title:"營衛 비교표 8칸",
+    sub:"營氣와 衛氣를 가르는 표를 채우세요. 性能·來源 칸은 미리 채워 두었습니다(來源은 공통점).",
+    banner:'공통점 = 둘 다 中焦 水穀精微에서 化生. 가르는 축은 屬性(陰/陽)·所在(內/外)·所主(血/氣)·所出(中焦/下焦)·淸濁.',
+    bank:["陰","陽","內","外","血","氣","營養","護衛","中焦","下焦","淸","濁"],
+    build:function(){
+      var slots=[];
+      function cell(ans){ var s=el("div",{class:"slot"},"?"); var o={el:s,accept:[ans]}; slots.push(o); return s; }
+      var table=el("table",{class:"cmp"});
+      table.innerHTML =
+        "<tr><th>구분</th><th>屬性</th><th>所在</th><th>所主</th><th>性能</th><th>作用</th><th>所出</th><th>來源</th><th>淸濁</th></tr>";
+      // 營 행
+      var r1=el("tr");
+      r1.appendChild(el("td",{class:"rowhead"},"營"));
+      [appendCell(r1,cell("陰")), appendCell(r1,cell("內")), appendCell(r1,cell("血"))];
+      r1.appendChild(el("td",{class:"pre"},"五臟調和·六腑洒陳"));
+      appendCell(r1,cell("營養"));
+      appendCell(r1,cell("中焦"));
+      r1.appendChild(el("td",{class:"pre"},"水穀精微"));
+      appendCell(r1,cell("淸"));
+      table.appendChild(r1);
+      // 衛 행
+      var r2=el("tr");
+      r2.appendChild(el("td",{class:"rowhead"},"衛"));
+      appendCell(r2,cell("陽"));
+      appendCell(r2,cell("外"));
+      appendCell(r2,cell("氣"));
+      r2.appendChild(el("td",{class:"pre"},"慓疾滑利"));
+      appendCell(r2,cell("護衛"));
+      appendCell(r2,cell("下焦"));
+      r2.appendChild(el("td",{class:"pre"},"水穀精微"));
+      appendCell(r2,cell("濁"));
+      table.appendChild(r2);
+
+      function appendCell(tr,node){ var td=el("td"); td.appendChild(node); tr.appendChild(td); return td; }
+
+      var root=el("div",{class:"slot-layout"});
+      root.appendChild(table);
+      var hint=el("div",{class:"meter"}); hint.style.marginTop="4px";
+      hint.innerHTML="營 = 脈中·主靜主守 / 衛 = 脈外·慓疾滑利·溫煦. 所出만 다름(營 中焦·衛 下焦).";
+      root.appendChild(hint);
+      return {root:root, slots:slots};
+    }
+  });
+
+  /* --- 게임 7 · 宗氣 두 방향 + 虛里 --- */
+  var G7 = PickGame({
+    num:7, title:"宗氣 두 방향 · 虛里 진단",
+    sub:"앞 6문항: 宗氣의 운행이 走息道(호흡쪽)인지 貫心脈(혈행쪽)인지. 뒤 3문항: 虛里 박동으로 성쇠 판단.",
+    items:[
+      {q:'<span class="hz z">出於肺 循喉嚨 故呼則出 吸則入</span>', options:["走息道","貫心脈"], answer:"走息道",
+        note:'肺를 지나 喉嚨을 돌며 호흡. 영추 五味.'},
+      {q:'言語·聲音이 이 운행과 밀접하다.', options:["走息道","貫心脈"], answer:"走息道",
+        note:'走息道 → 호흡·언어·성음·음성 강약 조절.'},
+      {q:'<span class="hz">宗氣留于海 其下者 注於氣街</span>', options:["走息道","貫心脈"], answer:"貫心脈",
+        note:'아래로 氣街에 注하여 經脈으로 진입. 영추 刺節眞邪.'},
+      {q:'心搏(脈搏)의 강약·규율을 主한다.', options:["走息道","貫心脈"], answer:"貫心脈",
+        note:'貫心脈, 行氣血. 脈의 搏動이 宗氣에 의존.'},
+      {q:'氣血의 運行과 脈의 搏動을 추동한다.', options:["走息道","貫心脈"], answer:"貫心脈",
+        note:'貫心脈 방향. 虛里로 성쇠를 관찰.'},
+      {q:'호흡과 음성의 강약을 조절한다.', options:["走息道","貫心脈"], answer:"走息道",
+        note:'走息道. 呼吸이 부드럽고 일정하면 宗氣 충성.'},
+      {q:'虛里 박동: <span class="hz">按之應手 動而不緊 緩而不急</span>', options:["無病(積于胸中)","不及(부족)","太過(外泄)"], answer:"無病(積于胸中)",
+        note:'정상 — 宗氣가 胸中에 잘 쌓인 상태.'},
+      {q:'虛里 박동: <span class="hz">其動微而不見</span>', options:["無病(積于胸中)","不及(부족)","太過(外泄)"], answer:"不及(부족)",
+        note:'박동이 미약해 보이지 않음 → 宗氣 不及.'},
+      {q:'虛里 박동: <span class="hz">高動而應衣</span> (박동이 옷에 느껴질 만큼 큼)', options:["無病(積于胸中)","不及(부족)","太過(外泄)"], answer:"太過(外泄)",
+        note:'옷에 응할 정도 → 太過, 宗氣外泄之狀.'}
+    ]
+  });
+
+  /* --- 게임 8 · 氣機失調 5종 처방 매칭 --- */
+  var G8 = PickGame({
+    num:8, title:"氣機失調 5종 처방 매칭",
+    sub:"氣機(升降出入)의 실조 다섯 가지를, 그 정의를 보고 치법과 매칭하세요.",
+    banner:'<b>氣逆</b>은 \'하강의 반대\'가 아니라 上升太過·下降不及. <b>氣陷</b>은 上昇不及 위주. <b>氣虛</b>(氣의 量 부족)는 氣機失調가 아님.',
+    defaultOptions:["疏通","降氣","升提","固攝","開泄"],
+    items:[
+      {q:'<span class="hz z">氣滯</span> — 어느 부위에 氣機가 失暢·阻滯됨.', answer:"疏通",
+        note:'막힌 것을 풀어준다. 氣行則血行, 氣滯則血瘀.'},
+      {q:'<span class="hz z">氣逆</span> — 上升이 太過하거나 下降이 不及함 (※ 단순 하강의 반대가 아님).', answer:"降氣",
+        note:'치솟는 기를 내린다. 肺氣上逆=咳喘, 胃氣上逆=噯氣嘔逆.'},
+      {q:'<span class="hz z">氣陷</span> — 淸氣가 아래에 처져 升擧하지 못함 (上昇不及이 위주).', answer:"升提",
+        note:'끌어올린다. 위하수·탈항·脫陰 등 下垂 증.'},
+      {q:'<span class="hz z">氣脫</span> — 氣가 안에서 지키지 못하고 대량 外로 離散, 氣絶에 임박.', answer:"固攝",
+        note:'붙잡아 고섭한다. 氣虛 極甚 → 氣竭·氣絶.'},
+      {q:'<span class="hz z">氣閉</span> — 氣가 밖으로 통하지 못해 안에 鬱結·閉塞됨.', answer:"開泄",
+        note:'급히 열어 통하게 한다(開泄). 中風 등과 유사한 폐색 상태.'}
+    ]
+  });
+
+  /* ---------- intro / outro ---------- */
+return [G2,G3,G4,G5,G6,G7,G8];
+  }
+});
+
+SECTIONS.push({ key:"shin", char:"神", name:"精·神", count:8, intro:"靈樞 本神 五神 정의·思惟 6단계·五臟 배속·六節藏象·五志虛實·三丹田·天癸.",
+  build:function(){
+/* 게임 1 · 영추 본신 五神 정의 빈칸 */
+  var G1 = PickGame({
+    num:1, title:"靈樞 本神 — 五神 정의",
+    sub:"각 정의 구절이 가리키는 것을 고르세요. 精·神·魂·魄·心·意·志·思·慮·智.",
+    banner:'혼·백 자리 바꾸기가 단골 함정. <b>隨神往來=魂</b>, <b>並精而出入=魄</b> (魂 아님).',
+    defaultOptions:["精","神","魂","魄","心","意","志","思","慮","智"],
+    items:[
+      {q:'<span class="hz z">生之來 謂之( )</span>', answer:"精", note:'생명의 내원이 되는 물질 = 精. 兩神相搏 合而成形 常先身生 是謂精(결기).'},
+      {q:'<span class="hz z">兩精相搏 謂之( )</span>', answer:"神", note:'두 정이 부딪쳐 이루어지는 것 = 神. 神은 火의 정기로 心에 저장.'},
+      {q:'<span class="hz z">隨神往來者 謂之( )</span>', answer:"魂", note:'神을 따라 오가는 것 = 魂. 혼지위언 여몽매황홀(꿈속 환각 같은 정신활동).'},
+      {q:'<span class="hz z">並精而出入者 謂之( )</span>', answer:"魄", note:'★함정 핵심. 精과 함께 출입하는 것 = 魄(魂 아님). 백지위용 능동능작 통양유지이각(통증·가려움 감각).'},
+      {q:'<span class="hz z">所以任物者 謂之( )</span>', answer:"心", note:'사물을 맡아 받아들이는 것 = 心. 마음(정신활동)의 발동이 시작되는 단계.'},
+      {q:'<span class="hz z">心有所憶 謂之( )</span>', answer:"意", note:'한 생각이 일어나 향하는 바 있으나 미정 = 意. 記而不忘者謂之意.'},
+      {q:'<span class="hz z">意之所存 謂之( )</span>', answer:"志", note:'뜻을 하나로 하여 흔들리지 않음 = 志. 專意而不移者謂之志, 의이결이탁유소립.'},
+      {q:'<span class="hz z">因志而存變 謂之( )</span>', answer:"思", note:'결정·저장된 것을 반복 사고·재고 = 思.'},
+      {q:'<span class="hz z">因思而遠慕 謂之( )</span>', answer:"慮", note:'앞으로 전개될 상황을 멀리 고려 = 慮.'},
+      {q:'<span class="hz z">因慮而處物 謂之( )</span>', answer:"智", note:'실제 상황에서 올바르게 인식·대처 = 智. 의려기생 이처득기선자위지지.'}
+    ]
+  });
+
+  /* 게임 2 · 사고 6단계 순서 */
+  var G2 = OrderGame({
+    num:2, title:"思惟 6단계 순서",
+    sub:"마음에서 지혜에 이르는 정신활동의 순서를 차례로 클릭하세요.",
+    banner:'심→의→지→사→려→지. 心(발동) → 意(미정) → 志(확립) → 思(재고) → 慮(예측) → 智(대처).',
+    sequence:[
+      {label:"心", gloss:"任物 — 사물을 받아들이는 마음의 발동, 정신활동의 시작", hint:"所以任物者"},
+      {label:"意", gloss:"心有所憶 — 생각이 일어나 향하나 아직 결정 안 됨", hint:"心有所憶·記而不忘"},
+      {label:"志", gloss:"意之所存 — 뜻을 하나로 확고히 세움(專意不移)", hint:"意之所存·專意不移"},
+      {label:"思", gloss:"因志而存變 — 세운 뜻을 반복 사고·재고", hint:"因志而存變"},
+      {label:"慮", gloss:"因思遠慕 — 앞으로의 상황을 멀리 헤아림", hint:"因思而遠慕"},
+      {label:"智", gloss:"因慮處物 — 실제 상황에 올바르게 대처", hint:"因慮而處物"}
+    ]
+  });
+
+  /* 게임 3 · 五臟–五神–정신경향 배속 */
+  var G3 = PickGame({
+    num:3, title:"五臟·五神 배속판",
+    sub:"오장에 저장되는 五神, 정신경향, 기억 작용을 가르세요.",
+    banner:'간(魂)·심(神)·비(意)·폐(魄)·신(志). 경향: 간 충동·심 욕구·비 융화·폐 제지·신 창조.',
+    items:[
+      {q:'<span class="hz">肝</span>이 저장하는 五神은?', options:["魂","神","意","魄","志"], answer:"魂", note:'肝藏血 血舍魂. 간=혼.'},
+      {q:'<span class="hz">心</span>이 저장하는 五神은?', options:["魂","神","意","魄","志"], answer:"神", note:'心藏脈 脈舍神. 심=신.'},
+      {q:'<span class="hz">脾</span>가 저장하는 五神은?', options:["魂","神","意","魄","志"], answer:"意", note:'脾藏營 營舍意. 비=의.'},
+      {q:'<span class="hz">肺</span>가 저장하는 五神은?', options:["魂","神","意","魄","志"], answer:"魄", note:'肺藏氣 氣舍魄. 폐=백.'},
+      {q:'<span class="hz">腎</span>이 저장하는 五神은?', options:["魂","神","意","魄","志"], answer:"志", note:'腎藏精 精舍志. 신=지.'},
+      {q:'꿈속의 환각 같은 정신활동(<span class="hz">혼지위언 여몽매황홀</span>)에 해당하는 것은?', options:["魂","魄"], answer:"魂", note:'魂 = 변환·유행하는 정신활동.'},
+      {q:'통증·가려움을 아는 본능적 감각·동작(<span class="hz">능동능작 통양유지이각</span>)은?', options:["魂","魄"], answer:"魄", note:'魄 = 본능적 감각·동작, 육체적 발달 담당.'},
+      {q:'<span class="hz">肝</span>의 정신경향은?', options:["충동경향","욕구경향","융화경향","제지경향","창조경향"], answer:"충동경향", note:'간=충동(관능)·운동. 계획수립·창작 등 발생기능.'},
+      {q:'<span class="hz">脾</span>의 정신경향은?', options:["충동경향","욕구경향","융화경향","제지경향","창조경향"], answer:"융화경향", note:'비=융화(인격관능)·영양. 비교분석·심사숙고.'},
+      {q:'<span class="hz">腎</span>의 정신경향은?', options:["충동경향","욕구경향","융화경향","제지경향","창조경향"], answer:"창조경향", note:'신=창조(작강관능)·배설. 최종 결정·저장.'},
+      {q:'기억을 통합하여 자기화하는 작용을 맡는 장부는?', options:["肝","心","脾","肺","腎"], answer:"脾", note:'비=통합. 폐(백)로 받은 정보와 저장된 것을 회상·결정 전까지.'},
+      {q:'기억의 회생을 억제하고 외부를 받아들이는 작용(제지)을 맡는 장부는?', options:["肝","心","脾","肺","腎"], answer:"肺", note:'폐=억제(제지경향). 외부→내부 수용, 육체적 발달.'}
+    ]
+  });
+
+  /* 게임 4 · 六節藏象論 표 채우기 */
+  var G4 = SlotGame({
+    num:4, title:"六節藏象論 표 — 五本·五榮",
+    sub:"五臟의 五本과 五榮 칸을 채우세요. 五處·五充·六氣·계절은 미리 채워 두었습니다. (脾 행은 비위·대소장·삼초·방광을 대표)",
+    banner:'六氣 속성은 標本中氣와 다름에 주의: 간=少陽·심=太陽·비=至陰·폐=太陰·신=少陰.',
+    bank:["罷極之本","生之本","倉廩之本","氣之本","蟄封藏之本","爪","面","脣四白","毛","髮"],
+    build:function(){
+      var slots=[];
+      function cell(ans){ var s=el("div",{class:"slot"},"?"); slots.push({el:s,accept:[ans]}); return s; }
+      function td(node){ var t=el("td"); t.appendChild(node); return t; }
+      function pre(txt){ return el("td",{class:"pre"},txt); }
+      var table=el("table",{class:"cmp"});
+      table.innerHTML="<tr><th>臟</th><th>五本</th><th>五處</th><th>五榮</th><th>五充</th><th>六氣</th><th>季節</th></tr>";
+      function row(name, fiveBen, fiveChu, fiveYing, fiveChung, qi, season){
+        var tr=el("tr"); tr.appendChild(el("td",{class:"rowhead"},name));
+        tr.appendChild(td(cell(fiveBen)));        // 五本 blank
+        tr.appendChild(pre(fiveChu));             // 五處 pre
+        tr.appendChild(td(cell(fiveYing)));       // 五榮 blank
+        tr.appendChild(pre(fiveChung));           // 五充 pre
+        tr.appendChild(pre(qi)); tr.appendChild(pre(season));
+        table.appendChild(tr);
+      }
+      row("肝","罷極之本","魂之處","爪","筋","少陽","春");
+      row("心","生之本","神之變","面","血脈","太陽","夏");
+      row("脾","倉廩之本","營之處","脣四白","肌","至陰","長夏");
+      row("肺","氣之本","魄之處","毛","皮","太陰","秋");
+      row("腎","蟄封藏之本","精之處","髮","骨","少陰","冬");
+      var root=el("div",{class:"slot-layout"}); root.appendChild(table);
+      var hint=el("div",{class:"meter"}); hint.style.marginTop="4px";
+      hint.innerHTML="五本: 파극·생·창름·기·칩봉장 / 五榮: 조·면·순사백·모·발. 凡十一臟 取決於膽也.";
+      root.appendChild(hint);
+      return {root:root, slots:slots};
+    }
+  });
+
+  /* 게임 5 · 五志(氣) 虛實 */
+  var G5 = PickGame({
+    num:5, title:"五臟氣 虛實 증상",
+    sub:"각 장부의 氣가 虛할 때 / 實할 때 나타나는 것을 고르세요. (靈樞 本神)",
+    banner:'오답엔 반대쪽(虛↔實) 증상을 섞었습니다. 방향을 함께 외우세요.',
+    items:[
+      {q:'<span class="hz">肝氣</span>가 <b>虛</b>하면?', options:["恐(공포)","怒(노)","厥(궐)","笑不休"], answer:"恐(공포)", note:'肝氣虛則恐. 實則怒.'},
+      {q:'<span class="hz">肝氣</span>가 <b>實</b>하면?', options:["恐(공포)","怒(노)","悲(비)","腹脹"], answer:"怒(노)", note:'肝氣實則怒. 虛則恐.'},
+      {q:'<span class="hz">心氣</span>가 <b>虛</b>하면?', options:["悲(비)","笑不休","厥(궐)","脹(창)"], answer:"悲(비)", note:'心氣虛則悲. 實則笑不休.'},
+      {q:'<span class="hz">心氣</span>가 <b>實</b>하면?', options:["悲(비)","笑不休","恐(공포)","鼻塞"], answer:"笑不休", note:'心氣實則笑不休(웃음이 그치지 않음). 虛則悲.'},
+      {q:'<span class="hz">脾氣</span>가 <b>虛</b>하면?', options:["四肢不用","腹脹","怒(노)","喘喝"], answer:"四肢不用", note:'脾氣虛則四肢不用·五臟不安. 實則腹脹·經溲不利.'},
+      {q:'<span class="hz">脾氣</span>가 <b>實</b>하면?', options:["四肢不用","腹脹","厥(궐)","悲(비)"], answer:"腹脹", note:'脾氣實則腹脹. 虛則四肢不用.'},
+      {q:'<span class="hz">肺氣</span>가 <b>虛</b>하면?', options:["鼻塞少氣","喘喝(천갈)","怒(노)","脹(창)"], answer:"鼻塞少氣", note:'肺氣虛則鼻塞不利·少氣. 實則喘喝·胸盈仰息.'},
+      {q:'<span class="hz">肺氣</span>가 <b>實</b>하면?', options:["鼻塞少氣","喘喝(천갈)","恐(공포)","四肢不用"], answer:"喘喝(천갈)", note:'肺氣實則喘喝(헐떡임). 虛則鼻塞少氣.'},
+      {q:'<span class="hz">腎氣</span>가 <b>虛</b>하면?', options:["厥(궐)","脹(창)","笑不休","腹脹"], answer:"厥(궐)", note:'腎氣虛則厥. 實則脹.'},
+      {q:'<span class="hz">腎氣</span>가 <b>實</b>하면?', options:["厥(궐)","脹(창)","悲(비)","鼻塞"], answer:"脹(창)", note:'腎氣實則脹. 虛則厥.'}
+    ]
+  });
+
+  /* 게임 6 · 精 정의·동의보감·단전 빈칸 */
+  var G6 = SlotGame({
+    num:6, title:"精 정의 · 三丹田 빈칸",
+    sub:"동의보감과 황원어의 핵심 구절 빈칸을 채우세요. 같은 글자가 여러 칸에 들어갈 수 있습니다.",
+    banner:'神은 心에, 精은 腎에, 形(氣)은 그 주재. 下丹田=精·中丹田=氣·上丹田=神.',
+    bank:["神","神","神","氣","氣","形","心","腎","精","志"],
+    build:function(){
+      var slots=[];
+      function slot(ans){ var s=el("div",{class:"slot"},"?"); slots.push({el:s,accept:[ans]}); return s; }
+      var root=el("div",{class:"slot-layout"});
+      function line(label, parts){ // parts: array of strings or slot
+        root.appendChild(el("div",{class:"tier-label"},label));
+        var ln=el("div");
+        parts.forEach(function(p){ if(typeof p==="string") ln.appendChild(el("span",{class:"static-box"},p)); else ln.appendChild(p); });
+        root.appendChild(ln);
+      }
+      line("東醫寶鑑 · 身形", ["精者", slot("神"), "之本 ／", slot("氣"), "者神之主 ／", slot("形"), "者神之宅"]);
+      line("東醫寶鑑 · 精", ["精之主宰在", slot("心"), " ／ 精之藏制在", slot("腎")]);
+      line("三丹田", ["下丹田藏", slot("精"), " ／ 中丹田藏", slot("氣"), " ／ 上丹田藏", slot("神")]);
+      line("黃元御 · 解精微論", ["水之精爲", slot("志"), " ／ 火之精爲", slot("神")]);
+      var hint=el("div",{class:"meter"}); hint.style.marginTop="10px";
+      hint.innerHTML="絳宮(心)=神之舍 · 泥丸(腦)=神之府. 髓不足者力不强, 智不足者智不多(唐容川).";
+      root.appendChild(hint);
+      return {root:root, slots:slots};
+    }
+  });
+
+  /* 게임 7 · 精 저장·배설·감독 + 병리 */
+  var G7 = PickGame({
+    num:7, title:"精 저장·배설·감독 · 병리",
+    sub:"精을 다스리는 장부와, 각 장부의 精이 부실할 때의 증상을 고르세요.",
+    banner:'主閉藏者腎也 · 司疏泄者肝也 · 二臟皆有相火 其系上屬於心(감독).',
+    items:[
+      {q:'精을 닫아 갈무리(<span class="hz">閉藏</span>)하는 장부는?', options:["腎","肝","心","脾"], answer:"腎", note:'主閉藏者腎也. 精之藏制在腎.'},
+      {q:'精을 소통시켜 배설(<span class="hz">疏泄</span>)하는 장부는?', options:["腎","肝","心","脾"], answer:"肝", note:'司疏泄者肝也. 상화가 動하면 정이 흘러나감.'},
+      {q:'精을 감독하는(군화로 주재) 장부는?', options:["腎","肝","心","脾"], answer:"心", note:'精之主宰在心. 二臟皆有相火 其系上屬於心. 心動則相火亦動.'},
+      {q:'<span class="hz">肝精</span>이 부실하면(肝精不固)?', options:["目眩無光","肌肉消瘦","齒髮浮落","神氣減少"], answer:"目眩無光", note:'肝精不固 → 目眩無光(눈이 어질하고 광채 없음).'},
+      {q:'<span class="hz">肺精</span>이 부족하면(肺精不足)?', options:["目眩無光","肌肉消瘦","齒髮浮落","神氣減少"], answer:"肌肉消瘦", note:'肺精不足 → 肌肉消瘦.'},
+      {q:'<span class="hz">腎精</span>이 부실하면(腎精不固)?', options:["目眩無光","肌肉消瘦","齒髮浮落","神氣減少"], answer:"齒髮浮落", note:'腎精不固 → 齒髮浮落(이와 머리털이 들뜨고 빠짐).'},
+      {q:'<span class="hz">脾精</span>이 부실하면(脾精不堅)?', options:["目眩無光","肌肉消瘦","齒髮浮落","神氣減少"], answer:"神氣減少", note:'脾精不堅 → 神氣減少.'},
+      {q:'精은 腎에서만 생성된다 — 맞는 설명인가?', options:["맞다","틀리다"], answer:"틀리다", note:'틀림. 精은 至陰之液으로 十二藏의 生化에서 기원하여 腎에 저장될 뿐, 신에서만 나오지 않음.'}
+    ]
+  });
+
+  /* 게임 8 · 天癸 · 上古天眞論 연표 */
+  var G8 = PickGame({
+    num:8, title:"天癸 · 上古天眞論 연표",
+    sub:"여자는 7년, 남자는 8년 주기. 天癸의 등장·소갈 시기와 단계별 변화를 고르세요.",
+    banner:'天癸至: 여 二七·남 二八 / 天癸竭: 여 七七·남 七八. 天癸는 腎中精氣 충성의 산물.',
+    items:[
+      {q:'여자에서 <span class="hz">天癸</span>가 처음 이르는 시기는?', options:["一七","二七","三七","四七"], answer:"二七", note:'二七(14세): 天癸至·任脈通·太衝脈盛·月事以時下 → 有子.'},
+      {q:'남자에서 <span class="hz">天癸</span>가 처음 이르는 시기는?', options:["一八","二八","三八","四八"], answer:"二八", note:'二八(16세): 天癸至·精氣溢瀉·陰陽和 → 能有子.'},
+      {q:'여자 <span class="hz">二七</span>에 함께 일어나는 것은?', options:["任脈通·太衝脈盛","陽明脈衰","任脈虛","眞牙生"], answer:"任脈通·太衝脈盛", note:'天癸至 → 任脈通·太衝脈盛·月事以時下.'},
+      {q:'여자 <span class="hz">五七(35세)</span>의 변화는?', options:["天癸至","陽明脈衰·面始焦·髮始墮","任脈虛·天癸竭","眞牙生而長極"], answer:"陽明脈衰·面始焦·髮始墮", note:'五七: 陽明脈衰, 面始焦, 髮始墮.'},
+      {q:'여자에서 <span class="hz">天癸가 竭(다)하는</span> 시기는?', options:["五七","六七","七七","八七"], answer:"七七", note:'七七(49세): 任脈虛·太衝脈衰少·天癸竭·地道不通 → 形壞無子.'},
+      {q:'남자 <span class="hz">五八(40세)</span>의 변화는?', options:["腎氣衰·髮墮齒槁","天癸至","筋骨隆盛","齒髮去"], answer:"腎氣衰·髮墮齒槁", note:'五八: 腎氣衰, 髮墮齒槁.'},
+      {q:'남자 <span class="hz">七八(56세)</span>의 변화는?', options:["天癸至·精氣溢瀉","肝氣衰·筋不能動·天癸竭·精少","眞牙生","髮長齒更"], answer:"肝氣衰·筋不能動·天癸竭·精少", note:'七八: 肝氣衰, 筋不能動, 天癸竭, 精少, 腎臟衰.'},
+      {q:'남자 <span class="hz">八八(64세)</span>에 이르면?', options:["天癸至","眞牙生","齒髮去","陰陽和"], answer:"齒髮去", note:'八八: 則齒髮去. 五臟皆衰 天癸盡.'},
+      {q:'남녀 모두 <span class="hz">三(七·八)</span> 시기에 나타나는 공통 변화는?', options:["天癸竭","眞牙生而長極","面焦髮白","月事以時下"], answer:"眞牙生而長極", note:'三七·三八: 腎氣平均 → 眞牙(사랑니)生·長極.'}
+    ]
+  });
+
+  /* intro / outro */
+return [G1,G2,G3,G4,G5,G6,G7,G8];
+  }
+});
+
+SECTIONS.push({ key:"xue", char:"血", name:"血·津液", count:6, intro:"혈의 생성·순행·정상운행 조건·津/液 갈림·미출제 가성비 최고 決氣 六氣 정의.",
+  build:function(){
+/* 게임 1 · 血 생성 파이프라인 */
+  var G1 = OrderGame({
+    num:1, title:"血 생성 파이프라인",
+    sub:"음식물이 혈로 화생하는 순서를 차례로 클릭하세요. 中焦受氣取汁 變化而赤 是謂血.",
+    banner:'정혈동원 함정: <b>髓(뇌수)는 혈의 근원이 아님</b>(精이 뇌수를 生함). 혈의 주요 조성 = 營氣 + 津液.',
+    doneLabel:"水穀 → 精微 → 營氣·津液 → 入脈 → 赤(血)",
+    sequence:[
+      {label:"水穀", gloss:"비위로 들어오는 음식물", hint:"음식물"},
+      {label:"脾胃 運化", gloss:"비위가 소화·운화", hint:"비위의 소화"},
+      {label:"水穀精微", gloss:"수곡의 정미로움 생성", hint:"정미 생성"},
+      {label:"營氣 + 津液", gloss:"영기와 진액으로 화생 — 혈의 주요 조성", hint:"營氣·津液"},
+      {label:"入脈中", gloss:"맥중(폐맥·손락)으로 들어감", hint:"맥중 진입"},
+      {label:"變化而赤=血", gloss:"적색으로 변하여 혈이 됨", hint:"赤色化"}
+    ]
+  });
+
+  /* 게임 2 · 혈 순행 장부 */
+  var G2 = PickGame({
+    num:2, title:"血 순행 장부 · 두 견해",
+    sub:"혈의 순행에 관여하는 장부와, 순행 경로의 두 견해를 가르세요.",
+    banner:'혈행과 가장 밀접 = 心·肝·脾 (굳이 더하면 肺). 心主血脈·肝藏血疏泄·脾統血·肺朝百脈.',
+    items:[
+      {q:'혈맥을 主하고 혈액순환을 총괄·추동하는 장부는?', options:["心","肺","肝","脾","腎"], answer:"心", note:'心主血脈. 心氣가 혈 순행의 기본 동력(추동).'},
+      {q:'전신 혈량을 조절하고 出血을 방지하며(藏血) 소설로 혈행을 통창하는 장부는?', options:["心","肺","肝","脾","腎"], answer:"肝", note:'肝藏血(혈량조절·출혈방지) + 肝主疏泄(기기조창→혈행 통창).'},
+      {q:'혈이 맥외로 일출하지 않게 통섭(統血)하는 장부는?', options:["心","肺","肝","脾","腎"], answer:"脾", note:'脾統血. 肝藏血과 협조하여 출혈 방지.'},
+      {q:'主氣하여 선산숙강으로 혈행을 돕고 朝百脈하는 장부는?', options:["心","肺","肝","脾","腎"], answer:"肺", note:'肺朝百脈·助行血. 혈액운행은 氣의 추동에 의지.'},
+      {q:'元陰·元陽을 主하여 음양 조화로 혈행을 정상화하는 장부는?', options:["心","肺","肝","脾","腎"], answer:"腎", note:'음허→혈행 가속·박혈망행 / 양허→혈행 지연·어혈.'},
+      {q:'혈행을 營氣의 순행노선과 동일하게 보아 十四經脈 순환유행으로 설명하는 견해는?', options:["靈樞 營氣","素問 經脈別論"], answer:"靈樞 營氣", note:'영혈이 십사경맥으로 순환유행 — 영기 운행노선과 동일.'},
+      {q:'음식물 중 정미물질이 혈행 따라 유포되는 물질대사 경로로 설명하는 견해는?', options:["靈樞 營氣","素問 經脈別論"], answer:"素問 經脈別論", note:'食氣入胃 散精於肝… 毛脈合精 行氣於府 — 물질대사 경로.'},
+      {q:'혈액순환 관통(혈액순환계)을 구성하는 것은?', options:["心·肺·脈","心·脾·肝","肺·肝·腎","脾·胃·腸"], answer:"心·肺·脈", note:'혈액순환계 직접 구성 = 心(펌프)·肺·脈(혈관).'},
+      {q:'혈액의 순행과 관련이 가장 먼 장부는?', options:["心","肝","脾","肺","腎"], answer:"腎", note:'혈행 직접 관련 = 心·肝·脾·肺. 腎은 음양조절로 간접 관여.'}
+    ]
+  });
+
+  /* 게임 3 · 혈 정상운행 3조건 + 한의학적 혈 */
+  var G3 = PickGame({
+    num:3, title:"血 정상운행 3조건 · 韓醫學的 血",
+    sub:"혈의 정상운행 3조건을 가르고, 함정선지를 잡아내세요. 한의학적 혈 개념도.",
+    banner:'3조건 = 氣의 추동·고섭(心·脾) / 영혈 충영(脾胃) / 맥도 통리(肝). <b>三焦通利는 혈행 조건이 아님</b>(진액 수포 조건).',
+    items:[
+      {q:'三焦通利는 혈의 정상운행 필수조건이다 — 맞는 설명인가?', options:["맞다","틀리다"], answer:"틀리다", note:'★함정. 三焦通利는 津液 수포의 조건. 혈행 3조건은 氣추동·고섭/영혈충영/맥도통리.'},
+      {q:'혈 정상운행 3조건 중 \'氣의 추동과 고섭\'을 담당하는 장부는?', options:["心·脾","肝·腎","肺·胃","脾·腎"], answer:"心·脾", note:'心氣 추동 + 脾 통섭(고섭). 심기충패.'},
+      {q:'혈 정상운행 3조건 중 \'영혈의 충영(營血充盈)\'을 담당하는 것은?', options:["心·脾","脾胃","肝","腎"], answer:"脾胃", note:'脾胃 = 氣血生化之源. 혈액 충영의 근원.'},
+      {q:'혈 정상운행 3조건 중 \'맥도의 통리(脈道通利)\'를 담당하는 장부는?', options:["心","脾","肝","肺"], answer:"肝", note:'肝主疏泄 → 기기조창 → 맥도 통리.'},
+      {q:'혈이 心君火로 蒸化되어 띠는 상징색(火)은?', options:["赤色","黑色","靑色","白色"], answer:"赤色", note:'心火 증화 → 熱氣 지닌 火의 상징색 赤色으로 변해 맥으로 입.'},
+      {q:'혈은 물질로 陰的 존재이나 心火로 무엇의 기능을 발휘하는가?', options:["陰","陽"], answer:"陽", note:'陰體陽用 — 혈은 음적 물질이나 심군화로 양의 기능 발휘.'},
+      {q:'혈의 근본은 水로서 어느 장부와 관계 깊은가?', options:["腎水","肺金","肝木","脾土"], answer:"腎水", note:'혈은 水火의 성질을 공유하며 그 근본은 水(腎水).'},
+      {q:'<span class="hz z">夫脈者 血之府也</span> — 맥은 혈의 집(통로)이다, 맞는가?', options:["맞다","틀리다"], answer:"맞다", note:'脈 = 혈액운행의 도로. 壅遏營氣 令無所避 是謂脈.'}
+    ]
+  });
+
+  /* 게임 4 · 津 vs 液 분류기 */
+  var G4 = PickGame({
+    num:4, title:"津 vs 液 분류기",
+    sub:"각 성상·분포·기능이 津인지 液인지 가르세요. 가름의 축은 小腸主泌別淸濁.",
+    banner:'津 = 맑고 유동성 큼 · 肌膚·孔竅·血脈 · 自潤(자윤). 液 = 稠厚하고 유동성 작음 · 骨節·腦髓·臟腑 · 營養.',
+    defaultOptions:["津","液"],
+    items:[
+      {q:'맑고 流動性이 커서 肌膚·孔竅·血脈을 滋潤한다.', answer:"津", note:'津 = 淸·動. 體表·肌膚·血脈中·孔竅에 布散.'},
+      {q:'稠厚하고 流動性이 작아 骨節·腦·髓·臟腑에 灌注·유양한다.', answer:"液", note:'液 = 濁稠·靜. 骨節·腦髓·臟腑에 灌注하여 濡養.'},
+      {q:'血脈 중에 滲注되어 혈을 滋潤하는 것은?', answer:"津", note:'津은 血脈에 渗注(혈의 자윤). cf. 영기+진액→혈.'},
+      {q:'骨節을 滑利하게 하고 腦髓를 充養하는 것은?', answer:"液", note:'液은 骨節·腦髓 충양·활리. Q53 정답 ⑤ 液.'},
+      {q:'주로 自潤(자윤)작용을 하는 것은?', answer:"津", note:'津이 淸稀하여 자윤 작용.'},
+      {q:'주로 營養작용을 하는 것은?', answer:"液", note:'液이 비교적 稠厚하여 영양 작용.'},
+      {q:'汗·尿로도 잘 나타나며 비교적 流動性이 큰 것은?', answer:"津", note:'淚·汗·涕 등 체표 분비와 가까움(津).'},
+      {q:'관절강 내 체액처럼 비교적 稠厚하여 머무는 것은?', answer:"液", note:'관절강·뇌수 등에 머무는 稠厚한 수액(液).'},
+      {q:'濡潤 臟腑·腦髓에 속하는 작용은?', answer:"液", note:'臟腑·腦髓 濡潤·灌注 = 液. (Q116)'},
+      {q:'濡潤 肌肉·血脈에 속하는 작용은?', answer:"津", note:'肌肉·血脈 濡潤 = 津. (Q117)'}
+    ]
+  });
+
+  /* 게임 5 · 결기편 六氣 정의 (슬롯) */
+  var G5 = SlotGame({
+    num:5, title:"靈樞 決氣 — 六氣 정의",
+    sub:"여섯 정의 구절에 알맞은 글자를 채우세요. 한 氣에서 갈라진 精·氣·津·液·血·脈.",
+    banner:'上焦開發…若霧露之漑 = <b>氣</b>(결기편 원문). 단 일부 기출은 熏膚·澤毛를 津의 布散으로 보아 津으로 처리 — 교재 기준 확인.',
+    flag:true,
+    bank:["精","氣","津","液","血","脈"],
+    build:function(){
+      var slots=[];
+      function slot(ans){ var s=el("div",{class:"slot"},"?"); slots.push({el:s,accept:[ans]}); return s; }
+      function row(phrase, ans){
+        var r=el("div",{class:"defrow"});
+        r.appendChild(el("span",{class:"ph"}, phrase));
+        r.appendChild(el("span",{class:"eq"},"→ 是謂"));
+        r.appendChild(slot(ans));
+        return r;
+      }
+      var root=el("div",{class:"slot-layout"});
+      root.appendChild(row('兩神相搏 合而成形 常先身生', "精"));
+      root.appendChild(row('上焦開發 宣五穀味 熏膚充身澤毛 若霧露之漑', "氣"));
+      root.appendChild(row('腠理發泄 汗出溱溱', "津"));
+      root.appendChild(row('穀入氣滿 淖澤注于骨 補益腦髓 皮膚潤澤', "液"));
+      root.appendChild(row('中焦受氣取汁 變化而赤', "血"));
+      root.appendChild(row('壅遏營氣 令無所避', "脈"));
+      var hint=el("div",{class:"meter"}); hint.style.marginTop="10px";
+      hint.innerHTML="余聞人有精氣津液血脈 余意以爲一氣耳 — 본디 하나의 氣에서 여섯으로 갈림.";
+      root.appendChild(hint);
+      return {root:root, slots:slots};
+    }
+  });
+
+  /* 게임 6 · 津液 수포·배설 */
+  var G6 = PickGame({
+    num:6, title:"津液 수포 · 배설",
+    sub:"진액을 전신에 수포하는 장부와 배설 경로, 자한·도한을 가르세요.",
+    banner:'수포: 脾散精·肺通調水道·腎蒸騰氣化·肝疏泄, 통로는 三焦. 其標在肺·其制在脾·其本在腎.',
+    items:[
+      {q:'진액을 散精하여 위로 올려보내는(脾散精) 장부는?', options:["脾","肺","腎","肝","三焦"], answer:"脾", note:'脾氣散精 — 진액 전수작용.'},
+      {q:'通調水道(선발·숙강으로 水道를 통조)하는 장부는?', options:["脾","肺","腎","肝","三焦"], answer:"肺", note:'肺通調水道 — 宣發(상·외)·肅降(하·내).'},
+      {q:'蒸騰氣化로 수액대사를 主宰하는 장부는?', options:["脾","肺","腎","肝","三焦"], answer:"腎", note:'腎主水 — 신중정기 증등기화로 진액 생성·수포·대사 추동.'},
+      {q:'疏泄로 기기를 조창해 진액 환류를 돕는 장부는?', options:["脾","肺","腎","肝","三焦"], answer:"肝", note:'肝主疏泄 — 기기조창으로 진액 정체 방지.'},
+      {q:'진액 수포·배설의 주요 통로(決瀆之官·水道)는?', options:["脾","肺","腎","肝","三焦"], answer:"三焦", note:'三焦 = 決瀆之官. 진액 輸布·排泄의 주요 통로.'},
+      {q:'진액이 땀(汗)으로 배설되는 것은 어느 장부 기능과 가장 관련?', options:["脾","肺","腎","肝"], answer:"肺", note:'肺의 宣發肅降이 진액을 피모로 보내 한공으로 배출.'},
+      {q:'진액 배설의 정상 경로가 아닌 것은?', options:["汗","呼氣","尿·大便","嘔吐"], answer:"嘔吐", note:'정상 배설 = 汗·呼氣·尿·大便. 嘔吐는 정상 경로 아님.'},
+      {q:'陽虛로 인해 주간에 무시로 나는 땀은?', options:["自汗","盜汗"], answer:"自汗", note:'自汗 = 양허·주간발한. 衛氣之所司也.'},
+      {q:'陰虛로 인해 야간에 나는 땀은?', options:["自汗","盜汗"], answer:"盜汗", note:'盜汗 = 음허·야간발한. 신음이 야간에 양기를 고섭 못함.'},
+      {q:'진액의 생성·수포·배설 대사과정을 총칭하는 것은?', options:["三焦氣化","肺朝百脈","心主血脈","肝藏血"], answer:"三焦氣化", note:'진액대사 과정을 주재하는 장부는 腎(主水), 총칭은 三焦氣化.'}
+    ]
+  });
+
+  /* intro / outro */
+return [G1,G2,G3,G4,G5,G6];
+  }
+});
+
+SECTIONS.push({ key:"hugen", char:"精", name:"互根", count:6, intro:"음양·체용 골격·氣爲血帥↔血爲氣母·임상 추론·氣津 평행·三同源·五脫.",
+  build:function(){
+/* 게임 1 · 음양·체용 좌표 + 三寶 (슬롯) */
+  var G1 = SlotGame({
+    num:1, title:"陰陽·體用 좌표 · 三寶",
+    sub:"神·氣·血·精을 陰陽(陽化氣/陰成形)과 體用 격자에 배치하고, 三寶의 天地人을 채우세요.",
+    banner:'神·氣 = 陽(陽化氣) / 血·精 = 陰(陰成形). 體 = 神·精, 用 = 氣·血. 神은 陽中之陽, 精은 陰中之陰.',
+    bank:["神","氣","血","精","氣","精","神"],
+    build:function(){
+      var slots=[];
+      function cell(ans){ var s=el("div",{class:"slot"},"?"); slots.push({el:s,accept:[ans]}); return s; }
+      function td(node){ var t=el("td"); t.appendChild(node); return t; }
+      var root=el("div",{class:"slot-layout"});
+
+      var table=el("table",{class:"grid"});
+      table.innerHTML="<tr><th>구분</th><th>體 (본체)</th><th>用 (기능)</th></tr>";
+      var r1=el("tr"); r1.appendChild(el("td",{class:"rowhead"},"陽 (陽化氣)"));
+      r1.appendChild(td(cell("神"))); r1.appendChild(td(cell("氣"))); table.appendChild(r1);
+      var r2=el("tr"); r2.appendChild(el("td",{class:"rowhead"},"陰 (陰成形)"));
+      r2.appendChild(td(cell("精"))); r2.appendChild(td(cell("血"))); table.appendChild(r2);
+      root.appendChild(table);
+
+      root.appendChild(el("div",{class:"tier-label"},"三寶 · 天地人"));
+      var sb=el("div",{class:"sanbao"});
+      [["天",cell("氣")],["地",cell("精")],["人",cell("神")]].forEach(function(p){
+        var pair=el("div",{class:"pair"});
+        pair.appendChild(el("div",{class:"lab"},p[0]));
+        pair.appendChild(p[1]);
+        sb.appendChild(pair);
+      });
+      root.appendChild(sb);
+
+      var hint=el("div",{class:"meter"}); hint.style.marginTop="12px";
+      hint.innerHTML="神=陽中之陽(體)·氣=陽中之陰(用)·血=陰中之陽(用)·精=陰中之陰(體). 三寶 = 精(地)·氣(天)·神(人).";
+      root.appendChild(hint);
+      return {root:root, slots:slots};
+    }
+  });
+
+  /* 게임 2 · 氣爲血帥 vs 血爲氣母 */
+  var G2 = PickGame({
+    num:2, title:"氣爲血帥 ↔ 血爲氣母",
+    sub:"각 관계가 \'氣가 血을 이끄는\' 帥인지, \'血이 氣를 기르는\' 母인지 가르세요. 글자치환 함정 주의.",
+    banner:'帥 = 氣能生血·行血·攝血. 母 = 血能載氣·혈위기지택. <b>氣爲血帥↔血爲氣主, 氣能行血↔血能行氣</b> 글자치환 함정.',
+    items:[
+      {q:'<span class="hz z">氣能生血</span> — 혈은 기의 수곡정미 운화작용으로 化生된다.', options:["氣爲血帥","血爲氣母"], answer:"氣爲血帥", note:'영기가 혈의 주요 조성. 血虛에 補氣藥+補血藥 배합.'},
+      {q:'<span class="hz z">氣能行血</span> — 혈액의 운행은 기의 溫運작용에 의한다.', options:["氣爲血帥","血爲氣母"], answer:"氣爲血帥", note:'氣行則血行, 氣滯則血瘀. 종기·심기 부족→추동력 약화→血瘀.'},
+      {q:'<span class="hz z">氣能攝血</span> — 기의 고섭으로 혈이 맥관 밖으로 일출하지 않는다.', options:["氣爲血帥","血爲氣母"], answer:"氣爲血帥", note:'脾統血("脾裹血")로 완성. 氣不攝血→출혈→건비·보기로 지혈.'},
+      {q:'<span class="hz z">血能載氣</span> — 혈이 기의 載體(기를 담는 그릇)가 된다.', options:["氣爲血帥","血爲氣母"], answer:"血爲氣母", note:'血爲氣之宅. 氣舍于血(기가 사는 곳이 혈).'},
+      {q:'기의 기능활동이 血의 營養에 의지한다.', options:["氣爲血帥","血爲氣母"], answer:"血爲氣母", note:'血爲氣母(血爲氣配). 기는 반드시 혈의 유양·운반에 의지.'},
+      {q:'大出血이 있으면 氣도 따라 일탈하는 <span class="hz">氣隨血脫</span>.', options:["氣爲血帥","血爲氣母"], answer:"血爲氣母", note:'혈능재기의 결과. 치법은 益氣固脫.'},
+      {q:'<span class="hz">氣爲血帥</span>를 \'氣爲血主\'라 바꿔도 같은 뜻이다 — 맞는가?', options:["맞다","틀리다"], answer:"틀리다", note:'帥(통솔자)≠主. 대표적 글자치환 함정.'},
+      {q:'\'血能行氣\'는 옳은 표현이다 — 맞는가?', options:["맞다","틀리다"], answer:"틀리다", note:'氣能行血이 맞음. 방향 전도 함정(혈이 기를 행하게 하지 않음).'}
+    ]
+  });
+
+  /* 게임 3 · 임상 시나리오 추론 */
+  var G3 = PickGame({
+    num:3, title:"임상 시나리오 추론",
+    sub:"기혈 互根 원리를 임상 상황에 적용하세요. 환자 상태에 따라 치법이 결정됩니다.",
+    banner:'有形之血不能速生, 無形之氣所當急固 — 대출혈엔 補血보다 益氣固脫이 급선무.',
+    items:[
+      {q:'大出血 환자에게 補血만으로 부족하고 <span class="hz">益氣固脫</span>을 함께 하는 근거는?', options:["有形之血不能速生·無形之氣所當急固","血能行氣","津能載氣","氣能生津"], answer:"有形之血不能速生·無形之氣所當急固", note:'혈은 빨리 못 만들고 기는 급히 고섭해야 함 → 氣能攝血·生血.'},
+      {q:'<span class="hz">氣不攝血</span>로 인한 변혈·붕루(下血)의 치법 방향은?', options:["健脾·補氣로 攝血","淸熱凉血","行氣破血","滋陰降火"], answer:"健脾·補氣로 攝血", note:'기허로 통섭 무권 → 혈이 하일. 健脾補氣(귀비탕류)로 지혈.'},
+      {q:'<span class="hz">氣隨血脫</span>(대출혈 후 냉한임리·사지궐랭·맥규)의 치법은?', options:["益氣固脫","補血養血","活血化瘀","發汗解表"], answer:"益氣固脫", note:'혈탈즉양망 → 급히 익기고탈(독삼탕류).'},
+      {q:'<span class="hz">血虛</span> 치료에 補氣藥(황기 등)을 배합하는 이유는?', options:["氣能生血","氣能攝血","血能載氣","津能載氣"], answer:"氣能生血", note:'氣能生血 → 보기로 생혈 촉진(당귀보혈탕: 황기:당귀 5:1).'},
+      {q:'<span class="hz">氣滯血瘀</span>의 치법 방향은?', options:["行氣活血","益氣攝血","滋陰潤燥","溫陽利水"], answer:"行氣活血", note:'氣行則血行 → 기를 풀어야 어혈도 풀림.'},
+      {q:'기허로 혈행 추동이 부족해 血瘀가 생겼다면 어느 氣의 부족인가?', options:["宗氣·心氣","衛氣","營氣","元氣"], answer:"宗氣·心氣", note:'종기 부족·심기 허 → 추동력 약화 → 血瘀(영추 자절진사 응체정류).'}
+    ]
+  });
+
+  /* 게임 4 · 氣津 평행 구조 */
+  var G4 = PickGame({
+    num:4, title:"氣津 평행 구조",
+    sub:"기와 진액의 관계는 기혈관계와 평행합니다. 각 관계를 가르고 차이점도 확인하세요.",
+    banner:'氣能生津·行津·攝津 / 津能載氣(氣隨津脫). 차이: 혈은 脈中에만, 진액은 脈內外 모두(상호삼출).',
+    items:[
+      {q:'진액의 생성은 비위의 기에 전적으로 의존한다.', options:["氣能生津","氣能行津","氣能攝津","津能載氣"], answer:"氣能生津", note:'氣能生津(기가이화수). 비·위·장 장부지기로 음식물에서 진액 생성.'},
+      {q:'진액의 수포·변화·배설은 모두 기의 추동·기화에 의지한다.', options:["氣能生津","氣能行津","氣能攝津","津能載氣"], answer:"氣能行津", note:'氣能行津(기능행수). 기화실조↔수정 상호인과(水停則氣阻).'},
+      {q:'기의 고섭으로 이유없는 진액 유실을 방지한다.', options:["氣能生津","氣能行津","氣能攝津","津能載氣"], answer:"氣能攝津", note:'衛氣 주리 고섭→위기허즉다한 / 腎氣 하초 고섭→허하면 다뇨·유뇨.'},
+      {q:'유형의 진액에 의존해야 무형이동하는 기가 작용력을 발휘한다.', options:["氣能生津","氣能行津","氣能攝津","津能載氣"], answer:"津能載氣", note:'津能載氣. 토하지여 정무완기 — 진액 모상이 기 손실 초래.'},
+      {q:'고열·대한·심한 토사로 진액이 대량 유실되어 기가 의지할 곳을 잃고 폭탈하는 것은?', options:["氣隨津脫","氣隨血脫","氣不攝津","津血同源"], answer:"氣隨津脫", note:'氣隨津脫(=津脫氣脫·망양). 발한다 약중발한자 망기양(상한론).'},
+      {q:'위기가 허하여 주리 고섭을 못하면 나타나는 것은?', options:["多汗","多尿","遺精","泄瀉"], answer:"多汗", note:'衛氣 주리 고섭 실조 → 위기허즉다한(自汗).'},
+      {q:'혈은 脈中에만 행하나 진액은 脈內外 모두에 존재한다 — 맞는가?', options:["맞다","틀리다"], answer:"맞다", note:'기혈관계와 평행하나 이 점이 차이. 진액은 맥내외 상호삼출 전화 가능.'}
+    ]
+  });
+
+  /* 게임 5 · 同源 3종 변별 */
+  var G5 = PickGame({
+    num:5, title:"三同源 변별",
+    sub:"각 \'同源\'이 어느 두 물질의 관계인지 가르세요. 을계동원=肝腎(精血) 함정 주의.",
+    banner:'津血同源 = 津+血 / 精血同源(乙癸·肝腎同源) = 精+血 / 汗血同源 = 汗+血. 髓는 혈의 근원이 아님(精이 뇌수를 生).',
+    items:[
+      {q:'<span class="hz z">津血同源</span> — 어느 두 물질의 관계인가?', options:["津 + 血","精 + 血","汗 + 血","氣 + 血"], answer:"津 + 血", note:'래원 동일(수곡정미)·상호전화(진액↔혈). 둘 다 유형이정·속음·자윤유양.'},
+      {q:'<span class="hz z">乙癸同源(肝腎同源)</span> — 어느 두 물질의 관계인가?', options:["津 + 血","精 + 血","汗 + 血","氣 + 津"], answer:"精 + 血", note:'肝藏血·腎藏精, 정혈 상호자생전화. 을계동원=肝腎(津血 아님).'},
+      {q:'<span class="hz z">奪血者無汗 奪汗者無血</span>(영추 영위생회)의 同源은?', options:["津 + 血","精 + 血","汗 + 血","氣 + 血"], answer:"汗 + 血", note:'汗血同源. 한과 혈은 근원이 같음(汗爲心之液).'},
+      {q:'<span class="hz">衄家不可發汗·亡血家不可發汗</span>의 근거가 되는 관계는?', options:["汗血同源","精血同源","氣血同源","津氣同源"], answer:"汗血同源", note:'피 흘린 자·혈 부족한 자는 발한 금지(津血/汗血同源).'},
+      {q:'정혈동원에서 髓(뇌수)는 혈의 근원인가?', options:["그렇다","아니다"], answer:"아니다", note:'髓는 혈의 생성래원이 아님. 거꾸로 精이 뇌수를 生한다.'},
+      {q:'을계동원은 津과 血의 동원이다 — 맞는가?', options:["맞다","틀리다"], answer:"틀리다", note:'乙癸同源 = 肝腎 = 精+血. 津血同源과 혼동 함정.'},
+      {q:'진액이 혈로 化하고 혈이 맥외로 滲出하여 진액이 되는 상호전화 관계는?', options:["津血同源","精血同源","汗血同源","氣津同源"], answer:"津血同源", note:'津↔血 상호전화(영기가 진액 흡수→혈 / 혈 맥외삼출→진액).'}
+    ]
+  });
+
+  /* 게임 6 · 五脫 매칭 (영추 결기) */
+  var G6 = PickGame({
+    num:6, title:"五脫 매칭 — 靈樞 決氣",
+    sub:"음·양·기·혈·진액이 대량 모손되는 五脫의 증후를 가르세요.",
+    banner:'精脫=耳聾 / 氣脫=目不明 — 둘 다 두면 감각기라 혼동 주의. 液脫만 골절·뇌수 증상.',
+    items:[
+      {q:'<span class="hz z">精脫</span>의 증후는?', options:["耳聾","目不明","腠理開汗大泄","骨屬屈伸不利","色白夭然不澤"], answer:"耳聾", note:'精脫者 耳聾(귀가 먹음). 腎開竅於耳와 연결.'},
+      {q:'<span class="hz z">氣脫</span>의 증후는?', options:["耳聾","目不明","腠理開汗大泄","骨屬屈伸不利","色白夭然不澤"], answer:"目不明", note:'氣脫者 目不明(눈이 흐려짐). 精脫(耳聾)과 짝으로 암기.'},
+      {q:'<span class="hz z">津脫</span>의 증후는?', options:["耳聾","目不明","腠理開汗大泄","骨屬屈伸不利","色白夭然不澤"], answer:"腠理開汗大泄", note:'津脫者 腠理開·汗大泄(주리가 열려 땀이 크게 샘).'},
+      {q:'<span class="hz z">液脫</span>의 증후는?', options:["耳聾","目不明","腠理開汗大泄","骨屬屈伸不利","色白夭然不澤"], answer:"骨屬屈伸不利", note:'液脫者 骨屬屈伸不利·色夭·腦髓消·脛痠·耳數鳴.'},
+      {q:'<span class="hz z">血脫</span>의 증후는?', options:["耳聾","目不明","腠理開汗大泄","骨屬屈伸不利","色白夭然不澤"], answer:"色白夭然不澤", note:'血脫者 色白·夭然不澤(혈색 없이 핏기 없음), 其脈空虛.'},
+      {q:'<span class="hz">耳聾</span>은 무엇의 脫인가?', options:["精脫","氣脫","津脫","液脫","血脫"], answer:"精脫", note:'精脫 → 耳聾.'},
+      {q:'<span class="hz">目不明</span>은 무엇의 脫인가?', options:["精脫","氣脫","津脫","液脫","血脫"], answer:"氣脫", note:'氣脫 → 目不明.'},
+      {q:'<span class="hz">腦髓消·脛痠·耳數鳴</span>은 무엇의 脫인가?', options:["精脫","氣脫","津脫","液脫","血脫"], answer:"液脫", note:'液脫 → 골속굴신불리·뇌수소·경산·이삭명. 액이 골절·뇌수를 못 채움.'},
+      {q:'주리개·한대설(汗大泄)은 무엇의 脫인가?', options:["精脫","氣脫","津脫","液脫","血脫"], answer:"津脫", note:'津脫 → 腠理開汗大泄. 津이 체표 자윤·汗의 근원.'}
+    ]
+  });
+
+  /* intro / outro */
+return [G1,G2,G3,G4,G5,G6];
+  }
+});
+
+SECTIONS.push({ key:"zong", char:"綜", name:"綜合 엔진", count:4, intro:"네 편을 묶는 마무리 — 전수검증 정오 변별·가나다라 묶음형·함정 9유형·원문-편명.",
+  build:function(){
+/* 게임 1 · 변별력 종합 모의 (전수검증 정오 변별) */
+  var G1 = PickGame({
+    num:1, title:"변별력 종합 모의 — 전수검증",
+    sub:"다섯 선지가 모두 기본서 문장처럼 보이지만 한 곳이 비틀려 있습니다. 발문에 맞는 하나를 고르세요.",
+    banner:'정기신혈진액 전 영역 교차. 元宗營衛·氣血 互根·津液·五脫·五神을 한 곳만 비틀었습니다.',
+    list:true,
+    items:[
+      {q:'<span class="qlead">옳은 것은?</span>',
+        options:[
+          "① 宗氣는 腎中精氣에서 化生하여 三焦로 분포한다",
+          "② 營氣는 脈外를 행하며 外邪를 방어한다",
+          "③ 元氣는 胸中(膻中)에 쌓여 虛里로 성쇠를 본다",
+          "④ 衛氣는 慓疾滑利하여 脈外로 행한다",
+          "⑤ 宗氣는 中焦에서 起始해 十二經脈을 순행한다"],
+        answer:"④ 衛氣는 慓疾滑利하여 脈外로 행한다",
+        note:'①은 元氣, ②③은 각각 衛氣·宗氣 설명을 元/營에 붙인 함정, ⑤는 營氣. ④만 옳음.'},
+      {q:'<span class="qlead">틀린 것은?</span>',
+        options:[
+          "① 氣爲血帥는 氣能生血·行血·攝血을 포괄한다",
+          "② 血爲氣母는 血能載氣를 포함한다",
+          "③ 大出血시 氣隨血脫이 일어난다",
+          "④ 血能行氣는 氣爲血帥의 한 내용이다",
+          "⑤ 氣滯則血瘀이다"],
+        answer:"④ 血能行氣는 氣爲血帥의 한 내용이다",
+        note:'④ 틀림 — 帥의 내용은 氣能行血. \'血能行氣\'는 방향이 전도된 잘못된 표현.'},
+      {q:'<span class="qlead">옳은 것은?</span>',
+        options:[
+          "① 津은 骨節·腦髓를 灌注·濡養한다",
+          "② 液은 맑고 유동성이 커 肌膚·孔竅를 자윤한다",
+          "③ 津과 液은 大腸主泌別淸濁으로 구별된다",
+          "④ 液은 비교적 稠厚하여 營養작용을 한다",
+          "⑤ 津은 주로 營養, 液은 주로 自潤한다"],
+        answer:"④ 液은 비교적 稠厚하여 營養작용을 한다",
+        note:'①②는 津/液 배속 전도, ③은 小腸主泌別淸濁(大腸 아님), ⑤는 자윤/영양 전도. ④만 옳음.'},
+      {q:'<span class="qlead">틀린 것은?</span>',
+        options:[
+          "① 精脫者 耳聾",
+          "② 氣脫者 目不明",
+          "③ 津脫者 腠理開汗大泄",
+          "④ 液脫者 色白夭然不澤",
+          "⑤ 血脫者 其脈空虛"],
+        answer:"④ 液脫者 色白夭然不澤",
+        note:'④ 틀림 — 色白夭然不澤은 血脫. 液脫은 骨屬屈伸不利·腦髓消·脛痠·耳數鳴.'},
+      {q:'<span class="qlead">옳은 것은?</span>',
+        options:[
+          "① 肝藏神, 心藏魂이다",
+          "② 脾藏意, 肺藏魄, 腎藏志이다",
+          "③ 並精而出入者謂之魂이다",
+          "④ 隨神往來者謂之魄이다",
+          "⑤ 思惟는 心→志→意→思→慮→智 순이다"],
+        answer:"② 脾藏意, 肺藏魄, 腎藏志이다",
+        note:'①은 간혼·심신 전도, ③④는 혼/백 자리 전도(隨神=魂·並精=魄), ⑤는 心→意→志 순. ②만 옳음.'},
+      {q:'<span class="qlead">틀린 것은?</span>',
+        options:[
+          "① 血 정상운행 3조건은 氣추동고섭·영혈충영·맥도통리이다",
+          "② 三焦通利는 血 정상운행의 필수조건이다",
+          "③ 血의 주요 조성은 營氣와 津液이다",
+          "④ 中焦受氣取汁變化而赤이 血의 생성이다",
+          "⑤ 髓는 血의 생성래원이 아니다"],
+        answer:"② 三焦通利는 血 정상운행의 필수조건이다",
+        note:'② 틀림 — 三焦通利는 津液 수포의 조건. 혈 3조건은 氣추동고섭/영혈충영/맥도통리.'},
+      {q:'<span class="qlead">옳은 것은?</span>',
+        options:[
+          "① 天癸至는 여자 二八·남자 二七이다",
+          "② 三寶는 精(天)·氣(地)·神(人)이다",
+          "③ 神은 陽中之陽, 精은 陰中之陰이다",
+          "④ 氣는 陰中之陽, 血은 陽中之陰이다",
+          "⑤ 元氣의 이명은 宗氣·營氣이다"],
+        answer:"③ 神은 陽中之陽, 精은 陰中之陰이다",
+        note:'①은 여二七·남二八 전도, ②는 精地·氣天 전도, ④는 氣陽中之陰·血陰中之陽 전도, ⑤는 眞氣·原氣·生氣. ③만 옳음.'}
+    ]
+  });
+
+  /* 게임 2 · 가나다라 묶음형 (복수정답) */
+  var G2 = MultiGame({
+    num:2, title:"가나다라 묶음형",
+    sub:"각 항목 중 옳은 것을 모두 고르고 채점하세요. 정확히 일치해야 정답입니다.",
+    banner:'전수검증형 — 한 항목만 틀려도 불일치. 함정 항목 하나가 섞여 있습니다.',
+    items:[
+      {q:' 다음 중 <span class="hz">氣의 6기능</span>에 해당하는 것.',
+        choices:[{t:"推動",ok:true},{t:"防禦",ok:true},{t:"固攝",ok:true},{t:"營養",ok:true},{t:"疏泄(소설)",ok:false}],
+        ans:"ㄱㄴㄷㄹ", note:'6기능 = 推動·溫煦·防禦·固攝·氣化·營養. 疏泄은 肝의 기능이지 氣의 6기능이 아님.'},
+      {q:' 다음 중 <span class="hz">津液 수포</span>에 관여하는 장부.',
+        choices:[{t:"脾(散精)",ok:true},{t:"肺(通調水道)",ok:true},{t:"腎(蒸騰氣化)",ok:true},{t:"肝(疏泄)",ok:true},{t:"心(主血脈)",ok:false}],
+        ans:"ㄱㄴㄷㄹ", note:'비·폐·신·간 + 三焦(통로). 心은 진액 수포의 직접 관여 장부가 아님.'},
+      {q:' 다음 중 <span class="hz">血爲氣母</span>의 내용.',
+        choices:[{t:"血能載氣",ok:true},{t:"기의 기능활동이 혈의 영양에 의지",ok:true},{t:"氣隨血脫",ok:true},{t:"氣能攝血",ok:false},{t:"氣能生血",ok:false}],
+        ans:"ㄱㄴㄷ", note:'母 = 載氣·養氣·氣隨血脫. 攝血·生血은 氣爲血帥(帥)의 내용.'},
+      {q:' 다음 중 <span class="hz">氣機失調 5종</span>에 해당하는 것.',
+        choices:[{t:"氣滯",ok:true},{t:"氣逆",ok:true},{t:"氣陷",ok:true},{t:"氣脫",ok:true},{t:"氣虛",ok:false}],
+        ans:"ㄱㄴㄷㄹ", note:'5종 = 滯·逆·陷·脫·閉. 氣虛는 氣의 量 부족이지 운동(氣機) 실조가 아님.'},
+      {q:' 다음 중 <span class="hz">衛氣</span>의 특성.',
+        choices:[{t:"脈外를 행함",ok:true},{t:"慓疾滑利",ok:true},{t:"司腠理開闔",ok:true},{t:"屬陽",ok:true},{t:"주로 血을 化生",ok:false}],
+        ans:"ㄱㄴㄷㄹ", note:'血 化生은 營氣. 衛는 脈外·慓疾滑利·司開闔·屬陽.'},
+      {q:' 다음 중 \'<span class="hz">同源</span>\' 관계로 성립하는 것.',
+        choices:[{t:"津血同源",ok:true},{t:"精血同源(乙癸)",ok:true},{t:"汗血同源",ok:true},{t:"氣血同源",ok:false},{t:"津氣同源",ok:false}],
+        ans:"ㄱㄴㄷ", note:'三同源 = 津血·精血(을계=간신)·汗血. 氣血·津氣는 \'동원\'이라는 정식 용어로 쓰지 않음.'}
+    ]
+  });
+
+  /* 게임 3 · 함정 9유형 식별 */
+  var G3 = PickGame({
+    num:3, title:"함정 9유형 식별",
+    sub:"원문과 변형을 비교하여 어떤 유형의 함정인지 고르세요. 기출 오류 패턴 면역 훈련.",
+    banner:'①글자치환 ②방향전도 ③역할바꿔치기 ④귀속치환 ⑤인물·저서 ⑥계절·시기 ⑦숫자·순서 ⑧복수정답 미세오류 ⑨정의 부정확',
+    defaultOptions:["①글자치환","②방향전도","③역할바꿔치기","④귀속치환","⑤인물·저서","⑥계절·시기","⑦숫자·순서","⑧복수정답 미세오류","⑨정의 부정확"],
+    items:[
+      {q:'原: <span class="hz">氣爲血帥</span> ／ 變: <span class="hz">氣爲血主</span>', answer:"①글자치환", note:'帥 → 主 한 글자 치환. 뜻은 다르지만 형태가 닮음.'},
+      {q:'原: <span class="hz">氣能行血</span> ／ 變: <span class="hz">血能行氣</span>', answer:"②방향전도", note:'주체-객체(기↔혈)가 뒤집힌 방향전도.'},
+      {q:'原: 元氣 = 장부·경락 기능의 基礎 ／ 變: 宗氣 = 장부·경락 기능의 基礎', answer:"③역할바꿔치기", note:'元氣와 宗氣의 역할을 맞바꿈(基礎=元氣, 원동력=宗氣).'},
+      {q:'原: <span class="hz">津</span> = 肌膚·孔竅 자윤 ／ 變: <span class="hz">液</span> = 肌膚·孔竅 자윤', answer:"④귀속치환", note:'분포·기능의 귀속을 津↔液으로 바꿔치기.'},
+      {q:'原: <span class="hz">水之精爲志</span>(黃元御) ／ 變: 水之精爲志(唐容川)', answer:"⑤인물·저서", note:'출전 인물(황원어 ↔ 당용천)을 바꾼 미스매칭.'},
+      {q:'原: 盜汗 = 陰虛·夜間 ／ 變: 盜汗 = 陽虛·晝間', answer:"⑥계절·시기", note:'주간/야간 시기와 음허/양허를 바꿈(自汗과 혼동).'},
+      {q:'原: 思惟 <span class="hz">心→意→志→思→慮→智</span> ／ 變: 心→志→意→思→慮→智', answer:"⑦숫자·순서", note:'단계 순서(意와 志)를 뒤바꾼 순서 함정.'},
+      {q:'原: 血 정상운행 = 氣추동고섭·영혈충영·맥도통리(3) ／ 變: + 三焦通利를 4번째 조건으로 추가', answer:"⑧복수정답 미세오류", note:'옳은 3조건에 그럴듯한 1개를 더해 미세하게 틀리게 만든 유형.'},
+      {q:'原: 결기편 <span class="hz">上焦開發…是謂氣</span> ／ 變: …는 진액을 자윤한다는 뜻이므로 津이다', answer:"⑨정의 부정확", note:'원문 정의(是謂氣)를 다른 개념(津)으로 곡해. ※ 일부 기출이 이 곡해를 답으로 처리 — 교재 확인.'}
+    ]
+  });
+
+  /* 게임 4 · 원문-편명 매칭 */
+  var G4 = PickGame({
+    num:4, title:"원문 — 편명 매칭",
+    sub:"각 구절의 출전(편명)을 고르세요. 인물·저서·편명 미스매칭(⑤유형) 대비.",
+    banner:'mediclassics.kr·ctext.org 대조로 확정한 출전. 편명까지 정확히 외워야 ⑤유형에 안 걸립니다.',
+    items:[
+      {q:'<span class="hz z">兩神相搏 合而成形 常先身生</span>', options:["靈樞 決氣","靈樞 本神","素問 上古天眞論","難經 36難"], answer:"靈樞 決氣", note:'六氣 정의의 출전 = 영추 결기.'},
+      {q:'<span class="hz z">隨神往來者謂之魂, 並精而出入者謂之魄</span>', options:["靈樞 本神","靈樞 決氣","素問 宣明五氣","靈樞 邪客"], answer:"靈樞 本神", note:'五神 정의의 출전 = 영추 본신.'},
+      {q:'<span class="hz z">女子二七 天癸至…七七 天癸竭</span>', options:["素問 上古天眞論","素問 六節藏象論","靈樞 天年","素問 金匱眞言論"], answer:"素問 上古天眞論", note:'女七男八 천계 연표 = 소문 상고천진론.'},
+      {q:'<span class="hz z">夫精者 身之本也</span>', options:["素問 金匱眞言論","素問 上古天眞論","東醫寶鑑 精","靈樞 本神"], answer:"素問 金匱眞言論", note:'夫精者身之本也 = 소문 금궤진언론.'},
+      {q:'<span class="hz z">三焦者 元氣之別使</span>', options:["難經 66難","難經 36難","素問 靈蘭秘典論","靈樞 營衛生會"], answer:"難經 66難", note:'三焦者元氣之別使 = 난경 66난.'},
+      {q:'<span class="hz z">命門者…原氣之所係也</span>', options:["難經 36難","難經 66難","素問 六節藏象論","靈樞 本臟"], answer:"難經 36難", note:'命門·原氣之所係 = 난경 36난.'},
+      {q:'<span class="hz z">胃之大絡 名曰虛里…脈宗氣也</span>', options:["素問 平人氣象論","靈樞 刺節眞邪","靈樞 五味","素問 經脈別論"], answer:"素問 平人氣象論", note:'虛里·脈宗氣也 = 소문 평인기상론.'},
+      {q:'<span class="hz z">營氣者 泌其津液 注之于脈 化以爲血</span>', options:["靈樞 邪客","靈樞 癰疽","靈樞 營衛生會","靈樞 決氣"], answer:"靈樞 邪客", note:'영기가 진액을 맥에 주입해 혈이 됨 = 영추 사객.'},
+      {q:'<span class="hz z">衛氣者 所以溫分肉 充皮膚 肥腠理 司開闔</span>', options:["靈樞 本臟","靈樞 營衛生會","素問 痹論","靈樞 邪客"], answer:"靈樞 本臟", note:'위기의 온분육·사개합 = 영추 본장.'},
+      {q:'<span class="hz z">奪血者無汗 奪汗者無血</span>', options:["靈樞 營衛生會","靈樞 決氣","素問 宣明五氣","素問 陰陽別論"], answer:"靈樞 營衛生會", note:'한혈동원의 출전 = 영추 영위생회.'},
+      {q:'<span class="hz z">精者神之本 氣者神之主 形者神之宅</span>', options:["東醫寶鑑 身形","東醫寶鑑 精","素問 上古天眞論","靈樞 本神"], answer:"東醫寶鑑 身形", note:'정자신지본… = 동의보감 신형.'},
+      {q:'<span class="hz z">肝者 罷極之本 魂之居也</span>', options:["素問 六節藏象論","靈樞 本神","素問 金匱眞言論","靈樞 九鍼論"], answer:"素問 六節藏象論", note:'간자 파극지본 = 소문 육절장상론.'},
+      {q:'<span class="hz z">出於肺 循喉嚨 故呼則出 吸則入</span>', options:["靈樞 五味","靈樞 刺節眞邪","素問 平人氣象論","靈樞 決氣"], answer:"靈樞 五味", note:'종기 走息道(호흡) = 영추 오미.'}
+    ]
+  });
+
+  /* intro / outro */
+return [G1,G2,G3,G4];
+  }
+});
+
+
+  /* ===== shell / nav ===== */
+  var view='home', games=[], nums=[], stages=[], cur=0;
+  var stageEl=document.getElementById("stage"), dotsEl=document.getElementById("dots");
+  var rightSlot=document.getElementById("rightslot"), footbar=document.getElementById("footbar");
+  var brand=document.getElementById("brand"), sealEl=document.getElementById("seal"), sigEl=document.getElementById("sig");
+  brand.addEventListener("click", backHome);
+
+  var TOTAL_GAMES=SECTIONS.reduce(function(a,s){return a+s.count;},0);
+
+  function makeIntro(sec, gs){ return { mount:function(root){
+    root.appendChild(el("div",{class:"g-num"},"\u7cbe\u6c23\u795e\u8840\u6d25\u6db2 \u00b7 "+sec.name));
+    root.appendChild(el("h2",{class:"g-title"},sec.name));
+    root.appendChild(el("p",{class:"lead"},sec.intro));
+    var menu=el("div",{class:"menu"});
+    gs.forEach(function(g){ var it=el("div",{class:"it"}); it.appendChild(el("span",{class:"n"},g.num)); it.appendChild(el("span",{class:"t"},g.title)); menu.appendChild(it); });
+    root.appendChild(menu);
+    root.appendChild(el("div",{class:"start-cta"},"Space \ub97c \ub20c\ub7ec \uc2dc\uc791 \u25b8"));
+  }};}
+
+  function makeOutro(sec, gs){ return { mount:function(root){
+    var sc=SCORE[sec.key]||{}, totC=0,totT=0;
+    root.appendChild(el("div",{class:"g-num"},sec.name+" \u00b7 \uc644\ub8cc"));
+    root.appendChild(el("h2",{class:"g-title"},sec.name+" \ud1b5\uacfc"));
+    var grid=el("div",{class:"bargrid"});
+    gs.forEach(function(g){ var s=sc[g.num]||{correct:0,total:0}; totC+=s.correct; totT+=s.total;
+      var pc=s.total?Math.round(s.correct/s.total*100):0;
+      var b=el("div",{class:"b"}); b.appendChild(el("span",{class:"nm"},"\uac8c\uc784 "+g.num+" \u00b7 "+g.title));
+      var tr=el("div",{class:"track"}),fl=el("div",{class:"fill"});fl.style.width=pc+"%";tr.appendChild(fl);b.appendChild(tr);
+      b.appendChild(el("span",{class:"pc"}, s.total?(s.correct+"/"+s.total):"\u2014")); grid.appendChild(b); });
+    var sl=el("div",{class:"scoreline"}); sl.innerHTML="\ud569\uacc4 <b>"+totC+"</b> / "+totT+(totT?(" \u00b7 "+Math.round(totC/totT*100)+"%"):"");
+    root.appendChild(sl); root.appendChild(grid);
+    var hb=el("button",{class:"restart"},"\u21a9 \ud648\uc73c\ub85c"); hb.addEventListener("click", backHome); root.appendChild(hb);
+  }};}
+
+  function setHeaderHome(){
+    sealEl.textContent="\u6c23"; sigEl.textContent="\u6c23";
+    rightSlot.innerHTML="";
+    var s1=el("div",{class:"stat"}); s1.innerHTML='<div class="v">'+SECTIONS.length+'</div><div class="l">\ud5c8\ube0c</div>';
+    var s2=el("div",{class:"stat"}); s2.innerHTML='<div class="v">'+TOTAL_GAMES+'</div><div class="l">\uac8c\uc784</div>';
+    rightSlot.appendChild(s1); rightSlot.appendChild(s2);
+  }
+  function setHeaderSection(sec){
+    sealEl.textContent=sec.char; sigEl.textContent=sec.char;
+    rightSlot.innerHTML="";
+    var hb=el("button",{class:"homebtn"},"\u2190 \ud648"); hb.addEventListener("click", backHome); rightSlot.appendChild(hb);
+  }
+
+  function renderDots(){
+    if(view!=='section'){ dotsEl.style.display="none"; dotsEl.innerHTML=""; return; }
+    dotsEl.style.display=""; dotsEl.innerHTML="";
+    var sc=SCORE[CURRENT]||{};
+    nums.forEach(function(n,idx){ var si=idx+1;
+      var d=el("div",{class:"dot"+(sc[n]?" done":"")+(cur===si?" active":"")}); d.appendChild(el("span",null,String(n)));
+      d.addEventListener("click",function(){ go(si); }); dotsEl.appendChild(d);
+    });
+  }
+
+  function renderHome(){
+    view='home'; CURRENT=null; setHeaderHome(); renderDots(); footbar.classList.add("hide");
+    stageEl.innerHTML=""; stageEl.style.opacity="0";
+    stageEl.appendChild(el("p",{class:"lead"},
+      "\uc2a4\ud398\uc774\uc2a4\ubc14\ub85c \uac8c\uc784 \uc0ac\uc774\ub97c \uad00\ud1b5\ud558\ub294 \ubcc0\ubcc4 \ud559\uc2b5 \ud5c8\ube0c \ub2e4\uc12f \ud3b8. \uc544\ub798 \uce78\uc744 \ub20c\ub7ec \uc2dc\uc791\ud558\uc138\uc694."));
+    var grid=el("div",{class:"home-grid"});
+    SECTIONS.forEach(function(sec,i){
+      var card=el("div",{class:"home-card"});
+      card.appendChild(el("div",{class:"ko"},sec.char));
+      var body=el("div",{class:"body"});
+      var t=el("div",{class:"t"}); t.appendChild(el("span",null,(i+1)+". "+sec.name)); t.appendChild(el("span",{class:"gm"},sec.count+"\uac8c\uc784"));
+      body.appendChild(t); body.appendChild(el("div",{class:"d"}, sec.intro));
+      card.appendChild(body); card.appendChild(el("div",{class:"go"},"\u25b8"));
+      card.addEventListener("click",function(){ enterSection(i); }); grid.appendChild(card);
+    });
+    stageEl.appendChild(grid);
+    requestAnimationFrame(function(){ stageEl.style.transition="opacity .25s"; stageEl.style.opacity="1"; });
+  }
+
+  function enterSection(i){
+    var sec=SECTIONS[i]; CURRENT=sec.key; SCORE[sec.key]={};
+    games=sec.build(); nums=games.map(function(g){return g.num;});
+    stages=[makeIntro(sec,games)].concat(games).concat([makeOutro(sec,games)]);
+    view='section'; cur=0; setHeaderSection(sec); footbar.classList.remove("hide"); renderStage();
+  }
+  function renderStage(){
+    stageEl.innerHTML=""; stageEl.style.opacity="0";
+    stages[cur].mount(stageEl); renderDots(); window.scrollTo({top:0,behavior:"smooth"});
+    requestAnimationFrame(function(){ stageEl.style.transition="opacity .25s"; stageEl.style.opacity="1"; });
+  }
+  function go(i){ if(i<0)i=0; if(i>stages.length-1)i=stages.length-1; cur=i; renderStage(); }
+  function backHome(){ renderHome(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+  document.addEventListener("keydown",function(e){
+    if(view!=='section'){ if(e.code==="Space")e.preventDefault(); return; }
+    if(e.code==="Space"){ e.preventDefault(); go(cur+1); }
+    else if(e.code==="ArrowLeft"){ e.preventDefault(); if(cur>0) go(cur-1); else backHome(); }
+    else if(e.code==="ArrowRight"){ e.preventDefault(); go(cur+1); }
+  });
+
+  renderHome();
+})();
+</script>
+</body>
+</html>
